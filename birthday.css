@@ -1,0 +1,79 @@
+:root {
+  --cream-bg: #FDF8EC;
+  --ink: #3A2A29;
+  --gold: #DFB45A;
+}
+
+* {
+  box-sizing: border-box;
+  user-select: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #EFE6D5;
+  color: var(--ink);
+  font-family: 'Quicksand', sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, .font-display {
+  font-family: 'Fredoka', sans-serif;
+}
+
+.font-hand {
+  font-family: 'Caveat', cursive;
+}
+
+.sketch-border {
+  border: 2.5px solid var(--ink);
+  box-shadow: 3px 4px 0px rgba(58, 42, 41, 0.16);
+}
+
+.sketch-border-sm {
+  border: 2px solid var(--ink);
+  box-shadow: 2px 3px 0px rgba(58, 42, 41, 0.15);
+}
+
+.paper-texture {
+  background-color: var(--cream-bg);
+  background-image:
+    radial-gradient(rgba(58, 42, 41, 0.03) 1px, transparent 0),
+    radial-gradient(rgba(223, 180, 90, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
+}
+
+@keyframes floatSoft {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(3deg); }
+}
+
+.animate-float {
+  animation: floatSoft 3.2s ease-in-out infinite;
+}
+
+.washi-tape {
+  position: absolute;
+  width: 52px;
+  height: 18px;
+  background-color: rgba(247, 224, 172, 0.88);
+  border: 1.8px solid var(--ink);
+  z-index: 25;
+  pointer-events: none;
+  box-shadow: 1px 2px 0px rgba(58, 42, 41, 0.1);
+}
+
+.washi-tape::before, .washi-tape::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  width: 3px;
+  background: repeating-linear-gradient(45deg, var(--ink), var(--ink) 2px, transparent 2px, transparent 4px);
+  opacity: 0.3;
+}
+
+.washi-tape::before { left: -2px; }
+.washi-tape::after { right: -2px; }

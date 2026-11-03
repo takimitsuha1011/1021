@@ -1,0 +1,246 @@
+:root {
+  --cream-bg: #FDF8EC;
+  --center-bg: #FFFDF7;
+  --kraft-paper: #E6D5B8;
+  --ink: #3A2A29;
+  --blush: #F9D5D3;
+  --butter: #FDE8B2;
+  --lavender: #DFD3E8;
+  --sage: #D4E4D2;
+  --gold: #DFB45A;
+}
+
+* {
+  box-sizing: border-box;
+  user-select: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #EFE6D5;
+  color: var(--ink);
+  font-family: 'Quicksand', sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, .font-display {
+  font-family: 'Fredoka', sans-serif;
+}
+
+.font-hand {
+  font-family: 'Caveat', cursive;
+}
+
+/* Hand-drawn sketchbook border style */
+.sketch-border {
+  border: 2.5px solid var(--ink);
+  box-shadow: 3px 4px 0px rgba(58, 42, 41, 0.16);
+}
+
+.sketch-border-sm {
+  border: 2px solid var(--ink);
+  box-shadow: 2px 3px 0px rgba(58, 42, 41, 0.15);
+}
+
+/* Paper grain subtle texture */
+.paper-texture {
+  background-color: var(--cream-bg);
+  background-image: 
+    radial-gradient(rgba(58, 42, 41, 0.03) 1px, transparent 0),
+    radial-gradient(rgba(223, 180, 90, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
+}
+
+.center-paper-texture {
+  background-color: var(--center-bg);
+  background-image: 
+    radial-gradient(rgba(58, 42, 41, 0.025) 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+/* 3D Polaroid Flip Card */
+.polaroid-scene {
+  perspective: 1000px;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), z-index 0s;
+}
+
+.polaroid-scene:hover {
+  z-index: 30 !important;
+  transform: scale(1.05) translateY(-4px) !important;
+}
+
+.polaroid-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.polaroid-card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.polaroid-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: #FFFDF9;
+  border: 2.5px solid var(--ink);
+  box-shadow: 4px 6px 0px rgba(58, 42, 41, 0.18);
+  border-radius: 4px;
+  padding: 8px 8px 26px 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.polaroid-back {
+  transform: rotateY(180deg);
+  background: #FFF9EB;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 19px,
+    rgba(58, 42, 41, 0.08) 20px
+  );
+}
+
+/* Washi Tape */
+.washi-tape {
+  position: absolute;
+  width: 52px;
+  height: 18px;
+  background-color: rgba(247, 224, 172, 0.88);
+  border: 1.8px solid var(--ink);
+  z-index: 25;
+  pointer-events: none;
+  box-shadow: 1px 2px 0px rgba(58, 42, 41, 0.1);
+}
+
+.washi-tape::before, .washi-tape::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  width: 3px;
+  background: repeating-linear-gradient(45deg, var(--ink), var(--ink) 2px, transparent 2px, transparent 4px);
+  opacity: 0.3;
+}
+
+.washi-tape::before { left: -2px; }
+.washi-tape::after { right: -2px; }
+
+/* Vinyl Spin Animation */
+@keyframes spinRecord {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.vinyl-spinning {
+  animation: spinRecord 4s linear infinite;
+}
+
+/* Tonearm Pivot */
+.tonearm {
+  transform-origin: 78% 22%;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: rotate(-18deg);
+}
+
+.tonearm.playing {
+  transform: rotate(10deg);
+}
+
+/* Candle Flame Flicker */
+@keyframes flicker {
+  0%, 100% { transform: scale(1) rotate(-2deg); opacity: 1; }
+  25% { transform: scale(1.06, 0.96) rotate(2deg); opacity: 0.95; }
+  50% { transform: scale(0.95, 1.08) rotate(-1deg); opacity: 1; }
+  75% { transform: scale(1.04, 0.98) rotate(3deg); opacity: 0.92; }
+}
+
+.candle-flame {
+  transform-origin: 50% 90%;
+  animation: flicker 1.4s infinite ease-in-out;
+  cursor: pointer;
+}
+
+/* Smoke puff animation when blown out */
+@keyframes puffUp {
+  0% { opacity: 0.9; transform: translateY(0) scale(0.5); }
+  100% { opacity: 0; transform: translateY(-28px) scale(1.7); }
+}
+
+.smoke-puff {
+  animation: puffUp 1.2s ease-out forwards;
+}
+
+/* Floating animation for doodles & hearts */
+@keyframes floatSoft {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(3deg); }
+}
+
+.animate-float {
+  animation: floatSoft 3.2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 15px 4px rgba(253, 224, 71, 0.55), 2px 3px 0px rgba(58, 42, 41, 0.2); }
+  50% { box-shadow: 0 0 24px 9px rgba(251, 191, 36, 0.78), 2px 3px 0px rgba(58, 42, 41, 0.2); }
+}
+
+.golden-glow {
+  animation: pulseGlow 2.2s infinite ease-in-out;
+}
+
+.pink-envelope-glow {
+  box-shadow: 0 0 22px 6px rgba(253, 224, 138, 0.75), 3px 4px 0px rgba(58, 42, 41, 0.16);
+}
+
+/* Gift box shake */
+@keyframes giftShake {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  20% { transform: rotate(-8deg) scale(1.08); }
+  40% { transform: rotate(8deg) scale(1.08); }
+  60% { transform: rotate(-6deg) scale(1.08); }
+  80% { transform: rotate(6deg) scale(1.05); }
+}
+
+.shake-box {
+  animation: giftShake 0.8s ease-in-out infinite;
+}
+
+/* Envelope hover */
+.envelope-card {
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s ease;
+  cursor: pointer;
+}
+
+.envelope-card:hover {
+  transform: translateY(-5px) rotate(-1.5deg) scale(1.04);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FDF8EC;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D5C1A5;
+  border-radius: 4px;
+  border: 2px solid #FDF8EC;
+}

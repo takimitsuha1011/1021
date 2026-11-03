@@ -1,0 +1,425 @@
+:root {
+  color-scheme: light;
+  --cream: #fdf8ec;
+  --paper: #fffdf7;
+  --ink: #3a2a29;
+  --gold: #dfb45a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 5rem 1rem 2rem;
+  background-color: var(--cream);
+  background-image: radial-gradient(rgba(58, 42, 41, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
+  color: var(--ink);
+  font-family: "Quicksand", sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 3px solid #b783d1;
+  outline-offset: 3px;
+}
+
+h1,
+h2 {
+  font-family: "Fredoka", sans-serif;
+}
+
+.back-link {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.65rem 1rem;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 2px 3px 0 rgba(58, 42, 41, 0.14);
+}
+
+.birthday-card {
+  width: min(100%, 760px);
+  margin: 0 auto;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  border: 2.5px solid var(--ink);
+  border-radius: 2rem;
+  background: var(--paper);
+  text-align: center;
+  box-shadow: 4px 5px 0 rgba(58, 42, 41, 0.14);
+}
+
+.page-header h1 {
+  margin: 0.35rem 0;
+  font-size: clamp(2rem, 8vw, 3.2rem);
+}
+
+.eyebrow {
+  margin: 0;
+  color: #9a7440;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.intro {
+  max-width: 32rem;
+  margin: 0.75rem auto 0;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.wish-section {
+  display: grid;
+  justify-items: center;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+.wish-form {
+  width: 100%;
+  max-width: 28rem;
+  text-align: left;
+}
+
+.wish-form label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.wish-entry {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.wish-entry input {
+  min-width: 12rem;
+  flex: 1;
+  padding: 0.7rem 0.8rem;
+  border: 2px solid rgba(58, 42, 41, 0.5);
+  border-radius: 0.75rem;
+  background: white;
+  color: var(--ink);
+}
+
+.wish-message {
+  min-height: 1.5rem;
+  margin: 0;
+  color: #8a4760;
+  font-family: "Caveat", cursive;
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+
+.candle-section {
+  margin-top: 1.2rem;
+}
+
+.candle-section h2 {
+  margin: 0.7rem 0 0.25rem;
+  font-size: 1.5rem;
+}
+
+.instruction {
+  margin: 0.25rem 0 0.5rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.cake-stage {
+  position: relative;
+  width: min(100%, 650px);
+  aspect-ratio: 900 / 550;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.cake {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  cursor: default;
+}
+
+.cake[aria-disabled="false"] {
+  cursor: pointer;
+}
+
+.cake[aria-disabled="false"]:focus-visible {
+  outline: 3px solid #b783d1;
+  outline-offset: 3px;
+}
+
+.cake-illustration {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.cake-illustration .hidden {
+  display: none;
+}
+
+.font-script {
+  font-family: "Caveat", cursive;
+}
+
+.flame-group {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 250ms ease;
+}
+
+.candles-lit .flame-group {
+  animation: flameFlicker 700ms ease-in-out infinite alternate;
+  opacity: 1;
+}
+
+.candles-out .flame-group {
+  animation: none;
+  opacity: 0;
+}
+
+.candles-out .smoke-path {
+  animation: smokeRise 1.6s ease-out forwards;
+}
+
+#mainCakeGroup {
+  transform-origin: 330px 410px;
+  transition: transform 250ms ease;
+}
+
+#mainCakeGroup:hover {
+  transform: translateY(-2px);
+}
+
+#bottomTierCavityGroup {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+.slice-served #bottomTierCavityGroup {
+  opacity: 1;
+}
+
+#knifeCutOverlay {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cutting-active #knifeCutOverlay {
+  opacity: 1;
+}
+
+.knife-line {
+  stroke-dasharray: 180;
+  stroke-dashoffset: 180;
+}
+
+#plateAndSliceGroup {
+  pointer-events: none;
+}
+
+.slice-served #plateAndSliceGroup {
+  pointer-events: auto;
+}
+
+#sidePlateBase {
+  opacity: 0.72;
+  transform: translateY(4px) scale(0.97);
+  transform-origin: 655px 488px;
+  transition: opacity 650ms ease, transform 750ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slice-served #sidePlateBase {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+#travelingSliceGroup {
+  opacity: 0;
+  transform: translate(-236px, -68px) rotate(-19deg) scale(0.84);
+  transform-origin: 650px 460px;
+  transition: transform 1100ms cubic-bezier(0.16, 1, 0.3, 1), opacity 450ms ease;
+}
+
+.slice-served #travelingSliceGroup {
+  opacity: 1;
+  transform: translate(0, 0) rotate(0) scale(1);
+}
+
+.slice-served #travelingSliceGroup:hover {
+  transform: translate(0, -4px) rotate(-1deg) scale(1.025);
+}
+
+.slice-served #travelingSliceGroup:active {
+  transform: translate(0, 1px) scale(0.98);
+}
+
+@keyframes flameFlicker {
+  from { opacity: 0.84; }
+  to { opacity: 1; }
+}
+
+@keyframes smokeRise {
+  0% { stroke-dashoffset: 44; opacity: 0; transform: translateY(4px); }
+  30% { opacity: 0.75; }
+  100% { stroke-dashoffset: 0; opacity: 0; transform: translateY(-24px) scaleX(1.15); }
+}
+
+@keyframes traceCutLine {
+  0% { stroke-dashoffset: 180; opacity: 1; }
+  70% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+.cutting-active .knife-line {
+  animation: traceCutLine 420ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.status-message {
+  min-height: 1.5rem;
+  margin: 0.5rem 0;
+  color: #70435b;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.controls {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+}
+
+.primary-button,
+.soft-button {
+  border: 2px solid var(--ink);
+  border-radius: 0.85rem;
+  padding: 0.75rem 1.2rem;
+  color: white;
+  font-weight: 700;
+  background: var(--gold);
+  box-shadow: 2px 3px 0 rgba(58, 42, 41, 0.15);
+  cursor: pointer;
+  transition: transform 150ms ease, filter 150ms ease;
+}
+
+.soft-button {
+  padding: 0.6rem 1rem;
+  color: var(--ink);
+  background: #f9d5d3;
+}
+
+.primary-button:hover,
+.soft-button:hover {
+  filter: brightness(0.96);
+  transform: translateY(-2px);
+}
+
+.primary-button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
+}
+
+.text-button {
+  border: 0;
+  padding: 0.45rem 0.65rem;
+  background: transparent;
+  color: #70435b;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.gift-surprise-link {
+  display: grid;
+  justify-items: center;
+  gap: 0.2rem;
+  width: fit-content;
+  margin: 1.15rem auto 0;
+  color: #70435b;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 180ms ease;
+}
+
+.gift-surprise-link:hover {
+  transform: translateY(-3px);
+}
+
+.gift-icon {
+  font-size: 2.8rem;
+  line-height: 1;
+  animation: giftBounce 1.8s ease-in-out infinite;
+}
+
+@keyframes giftBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@keyframes flicker {
+  from { transform: rotate(5deg) scale(0.95); }
+  to { transform: rotate(-7deg) scale(1.06); }
+}
+
+@media (max-width: 420px) {
+  body {
+    padding-right: 0.65rem;
+    padding-left: 0.65rem;
+  }
+
+  .birthday-card {
+    padding: 1.4rem 1rem;
+  }
+
+  .cake-stage {
+    width: min(100%, 430px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,459 @@
+.birthday-page-content {
+  width: 100%;
+}
+
+.birthday-music-player {
+  --player-ink: #4a312d;
+  --player-rose: #d97583;
+  position: fixed;
+  z-index: 1000;
+  top: 12px;
+  right: 12px;
+  width: min(420px, calc(100vw - 24px));
+  padding: 12px;
+  border: 2px solid #dfb3b9;
+  border-radius: 20px;
+  background: linear-gradient(145deg, rgba(255, 249, 248, 0.98), rgba(249, 221, 225, 0.98));
+  color: var(--player-ink);
+  box-shadow: 0 12px 32px rgba(74, 49, 45, 0.2);
+  font-family: "Quicksand", sans-serif;
+  backdrop-filter: blur(12px);
+}
+
+.birthday-music-player *,
+.birthday-music-player *::before,
+.birthday-music-player *::after {
+  box-sizing: border-box;
+}
+
+.birthday-music-disc {
+  display: none;
+  width: 76px;
+  height: 76px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 11px;
+  background: transparent;
+  box-shadow: 0 4px 11px rgba(122, 72, 78, 0.24);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.birthday-music-player .birthday-music-mute-collapsed {
+  display: none;
+}
+
+.birthday-music-player.is-collapsed .birthday-music-mute-collapsed {
+  position: absolute;
+  z-index: 5;
+  right: -2px;
+  bottom: -2px;
+  display: grid;
+  width: 27px;
+  height: 27px;
+  font-size: 15px;
+}
+
+.birthday-music-mute {
+  display: grid;
+  width: 24px;
+  height: 20px;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #4a312d;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.birthday-music-mute:hover:not(:disabled) {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.birthday-music-volume-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 5px;
+}
+
+.birthday-music-volume {
+  width: 78px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--player-rose);
+  cursor: pointer;
+}
+
+.birthday-music-turntable {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 2px solid #bd8588;
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.45), transparent 34%),
+    linear-gradient(145deg, #f9e3d9, #e8b8b8 72%, #cf9399);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 249, 248, 0.78),
+    inset 0 -3px 0 rgba(122, 72, 78, 0.18);
+}
+
+.birthday-music-turntable::before {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 7px;
+  height: 7px;
+  border: 1px solid rgba(74, 49, 45, 0.72);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff9f7, #87625d 72%);
+  box-shadow: 0 0 0 1px rgba(255, 249, 248, 0.7);
+  content: "";
+}
+
+.birthday-music-turntable::after {
+  position: absolute;
+  z-index: 2;
+  top: 7px;
+  right: 12px;
+  width: 2px;
+  height: 26px;
+  border: 1px solid rgba(74, 49, 45, 0.62);
+  border-radius: 3px;
+  background: linear-gradient(90deg, #fff9f7, #87625d 58%, #fff9f7);
+  box-shadow: 0 0 0 1px rgba(255, 249, 248, 0.56);
+  content: "";
+  transform: rotate(28deg);
+  transform-origin: 50% 4px;
+}
+
+.birthday-music-record {
+  position: absolute;
+  top: 10px;
+  left: 8px;
+  display: grid;
+  width: 56px;
+  height: 56px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(255, 249, 248, 0.88);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #f6c9ce 0 10%, #804d55 10.5% 12%, transparent 12.5%),
+    repeating-radial-gradient(circle, transparent 0 3px, rgba(255, 249, 248, 0.18) 3.5px 4px),
+    radial-gradient(circle at 35% 30%, #655257, #302327 65%, #171214);
+  box-shadow: 0 2px 4px rgba(74, 49, 45, 0.36), inset 0 0 0 1px rgba(0, 0, 0, 0.24);
+  transform-origin: center;
+}
+
+.birthday-music-record img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.birthday-music-record::after {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle, transparent 0 4px, rgba(255, 255, 255, 0.16) 4.6px 5px);
+  content: "";
+  pointer-events: none;
+}
+
+.birthday-music-disc-center {
+  position: relative;
+  z-index: 3;
+  width: 15px;
+  height: 15px;
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff9f7 0 1px, #d97583 1.5px 100%);
+  box-shadow: 0 1px 4px rgba(58, 42, 41, 0.3);
+}
+
+.birthday-music-player.is-collapsed {
+  width: 84px;
+  padding: 0;
+  border: none;
+  border-radius: 15px;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.birthday-music-player.is-collapsed .birthday-music-disc {
+  display: block;
+}
+
+.birthday-music-player.is-collapsed .birthday-music-record {
+  animation: birthday-vinyl-spin 1.8s linear infinite;
+  animation-play-state: paused;
+}
+
+.birthday-music-player.is-collapsed.is-playing .birthday-music-record {
+  animation-play-state: running;
+}
+
+.birthday-music-expanded {
+  display: none;
+}
+
+.birthday-music-player.is-expanded .birthday-music-expanded {
+  display: block;
+}
+
+.birthday-music-back {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 29px !important;
+  height: 29px !important;
+  flex: 0 0 auto;
+  font-size: 18px !important;
+}
+
+.birthday-music-main {
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+}
+
+.birthday-music-cover {
+  display: grid;
+  width: 78px;
+  height: 78px;
+  place-items: center;
+  overflow: hidden;
+  border: 1.5px solid rgba(74, 49, 45, 0.24);
+  border-radius: 13px;
+  background: #f3c1ca;
+  color: #8a4760;
+  font-size: 30px;
+}
+
+.birthday-music-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.birthday-music-info {
+  min-width: 0;
+}
+
+.birthday-music-title {
+  min-width: 0;
+  padding-right: 35px;
+  overflow: hidden;
+  margin: 1px 0 0;
+  font-size: 14px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.birthday-music-artist {
+  overflow: hidden;
+  margin: 2px 0 6px;
+  color: #87625d;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.birthday-music-button {
+  border: 1.5px solid #87625d;
+  background: rgba(255, 253, 247, 0.8);
+  color: var(--player-ink);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.birthday-music-button:hover:not(:disabled) {
+  background: #fde8b2;
+}
+
+.birthday-music-lyrics {
+  height: calc(3 * 1.35em);
+  margin-top: 4px;
+  overflow: hidden;
+  color: #755e57;
+  font-family: "Caveat", cursive;
+  font-size: 14px;
+  line-height: 1.35;
+  scroll-behavior: smooth;
+}
+
+.birthday-music-lyric {
+  overflow: hidden;
+  margin: 0;
+  opacity: 0.68;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.35;
+}
+
+.birthday-music-lyric.is-current {
+  color: #a34459;
+  font-weight: 700;
+  opacity: 1;
+}
+
+.birthday-music-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.birthday-music-button {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 13px;
+}
+
+.birthday-music-volume-controls .birthday-music-mute {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.birthday-music-button-primary {
+  width: 38px;
+  height: 38px;
+  border-color: var(--player-ink);
+  background: var(--player-ink);
+  color: #fff9f7;
+  font-size: 15px;
+}
+
+.birthday-music-button-primary:hover:not(:disabled) {
+  background: #69484a;
+}
+
+.birthday-music-button:disabled,
+.birthday-music-seek:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.birthday-music-seek {
+  width: 100%;
+  min-width: 0;
+  height: 5px;
+  accent-color: var(--player-rose);
+  cursor: pointer;
+}
+
+.birthday-music-time {
+  flex: 0 0 auto;
+  color: #755e57;
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.birthday-music-status {
+  margin: 6px 0 0;
+  color: #755e57;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.birthday-music-status:empty {
+  display: none;
+}
+
+@keyframes birthday-vinyl-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 420px) {
+  .birthday-music-player {
+    top: 10px;
+    right: 10px;
+    width: min(370px, calc(100vw - 20px));
+    padding: 10px;
+  }
+
+  .birthday-music-player.is-collapsed {
+    width: 72px;
+    padding: 0;
+  }
+
+  .birthday-music-disc {
+    width: 64px;
+    height: 64px;
+  }
+
+  .birthday-music-player.is-collapsed .birthday-music-mute-collapsed {
+    right: -2px;
+    bottom: -2px;
+    width: 26px;
+    height: 26px;
+    font-size: 14px;
+  }
+
+  .birthday-music-mute {
+    width: 24px;
+    height: 20px;
+    font-size: 12px;
+  }
+
+  .birthday-music-record {
+    top: 8px;
+    left: 6px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .birthday-music-main {
+    grid-template-columns: 68px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .birthday-music-cover {
+    width: 68px;
+    height: 68px;
+  }
+
+  .birthday-music-controls {
+    gap: 7px;
+    margin-top: 8px;
+  }
+
+  .birthday-music-time {
+    font-size: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .birthday-music-lyrics {
+    scroll-behavior: auto;
+  }
+
+  .birthday-music-player.is-collapsed .birthday-music-record {
+    animation: none;
+  }
+}

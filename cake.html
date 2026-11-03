@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FDF8EC" />
+  <title>Make a Birthday Wish 🎂</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="cake.css" />
+  <link rel="stylesheet" href="music-player.css" />
+  <script src="music-config.js" defer></script>
+  <script src="music-player.js" defer></script>
+</head>
+<body>
+  <a class="back-link" href="digital-vault.html">← Back to your birthday letters</a>
+
+  <main class="birthday-card">
+    <header class="page-header">
+      <p class="eyebrow">One more little surprise</p>
+      <h1>Your Birthday Cake <span aria-hidden="true">🎂</span></h1>
+      <p class="intro">Close your eyes, make a wish, and get ready for a sweet little celebration.</p>
+    </header>
+
+    <section class="wish-section" aria-labelledby="wish-heading">
+      <button id="wish-button" class="soft-button" type="button" aria-expanded="false" aria-controls="wish-form">Make a wish ✨</button>
+      <form id="wish-form" class="wish-form" hidden>
+        <label for="wish-input">What's your birthday wish?</label>
+        <div class="wish-entry">
+          <input id="wish-input" name="wish" maxlength="120" autocomplete="off" placeholder="Write your wish..." required />
+          <button class="soft-button" type="submit">Send my wish</button>
+        </div>
+      </form>
+      <p id="wish-message" class="wish-message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="candle-section" aria-labelledby="candle-heading">
+      <h2 id="candle-heading">A birthday cake made just for you</h2>
+      <p id="cake-instruction" class="instruction">Light the candles, make a wish, and blow them out!</p>
+      <div class="cake-stage">
+        <div id="cake" class="cake" role="button" tabindex="0" aria-disabled="true" aria-label="Birthday cake. Light and blow out the candles before taking a slice.">
+      <svg id="birthdaySceneSvg" viewBox="-120 0 900 550" class="cake-illustration">
+        <defs>
+          <!-- Subtle hand-drawn organic fine-line displacement filter -->
+          <filter id="watercolorPaper" x="-5%" y="-5%" width="110%" height="110%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.038" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.05" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+
+          <!-- Soft drop shadow under cake stand and dessert plate -->
+          <radialGradient id="tableShadowGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#b89f8b" stop-opacity="0.45"/>
+            <stop offset="65%" stop-color="#d5c2b0" stop-opacity="0.20"/>
+            <stop offset="100%" stop-color="#fdfaf3" stop-opacity="0"/>
+          </radialGradient>
+
+          <!-- Shadow cast by the interior sponge walls onto the exposed cake stand floor -->
+          <linearGradient id="cavityFloorShadow" x1="0%" y1="0%" x2="80%" y2="100%">
+            <stop offset="0%" stop-color="#6e4f42" stop-opacity="0.38"/>
+            <stop offset="45%" stop-color="#8c6a5a" stop-opacity="0.18"/>
+            <stop offset="100%" stop-color="#d4beae" stop-opacity="0.05"/>
+          </linearGradient>
+
+          <!-- Left Cut Wall deeper warm shadow overlay -->
+          <linearGradient id="leftWallShade" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#3d241e" stop-opacity="0.14"/>
+            <stop offset="100%" stop-color="#3d241e" stop-opacity="0.28"/>
+          </linearGradient>
+
+          <!-- Right Cut Wall soft directional light overlay -->
+          <linearGradient id="rightWallShade" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#3d241e" stop-opacity="0.22"/>
+            <stop offset="30%" stop-color="#3d241e" stop-opacity="0.05"/>
+            <stop offset="100%" stop-color="#fff8ee" stop-opacity="0.12"/>
+          </linearGradient>
+
+          <!-- Candle Flame Glow -->
+          <radialGradient id="flameGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffe57f" stop-opacity="0.88"/>
+            <stop offset="52%" stop-color="#ffb74d" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#ffb74d" stop-opacity="0"/>
+          </radialGradient>
+
+          <!-- =============================================================== -->
+          <!-- CLIP PATHS FOR GENUINE BOTTOM-TIER WEDGE REMOVAL                -->
+          <!-- Wedge opening spans X=352 (Left Cut) to X=458 (Right Cut),      -->
+          <!-- recessed back to the inner crease at (382, 305)                 -->
+          <!-- =============================================================== -->
+          <clipPath id="bottomTierIntactClip">
+            <rect x="0" y="0" width="860" height="550" />
+          </clipPath>
+
+          <!-- Clip path applied when slice is cut: genuinely removes the front-right wedge (X: 352..458) from the bottom tier -->
+          <clipPath id="bottomTierCutoutClip">
+            <!-- Keeps everything to the left of the Left Cut Edge (X <= 352) -->
+            <polygon points="0,0 352,0 352,550 0,550" />
+            <!-- Keeps everything to the right of the Right Cut Edge (X >= 458) -->
+            <polygon points="458,0 860,0 860,550 458,550" />
+            <!-- Keeps the back portion of the bottom tier above the V-cut (352,321)->(382,305)->(458,312) -->
+            <polygon points="352,0 458,0 458,312 382,305 352,321" />
+          </clipPath>
+
+          <!-- =============================================================== -->
+          <!-- THEME 1: COQUETTE RUFFLES & BOWS GRADIENTS                      -->
+          <!-- =============================================================== -->
+          <linearGradient id="coq-tier-bottom" x1="0%" y1="0%" x2="100%" y2="8%">
+            <stop offset="0%" stop-color="#f2c8cc"/>
+            <stop offset="35%" stop-color="#fae0e3"/>
+            <stop offset="75%" stop-color="#ebb8be"/>
+            <stop offset="100%" stop-color="#dfa6ad"/>
+          </linearGradient>
+          <linearGradient id="coq-tier-mid" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#fbf2e4"/>
+            <stop offset="42%" stop-color="#fffaf2"/>
+            <stop offset="82%" stop-color="#f3e4d0"/>
+            <stop offset="100%" stop-color="#e7d4bc"/>
+          </linearGradient>
+          <linearGradient id="coq-tier-top" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#f6d5d8"/>
+            <stop offset="45%" stop-color="#fde8ea"/>
+            <stop offset="85%" stop-color="#ecc0c4"/>
+            <stop offset="100%" stop-color="#e0aeb3"/>
+          </linearGradient>
+          <linearGradient id="coq-stand" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#d8b79e"/>
+            <stop offset="35%" stop-color="#edd5c3"/>
+            <stop offset="75%" stop-color="#caa387"/>
+            <stop offset="100%" stop-color="#b88f73"/>
+          </linearGradient>
+
+          <!-- =============================================================== -->
+          <!-- THEME 2: GARDEN PARTY & BLOOMS GRADIENTS                        -->
+          <!-- =============================================================== -->
+          <linearGradient id="gar-tier-bottom" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#c0cfb4"/>
+            <stop offset="38%" stop-color="#d5e2ca"/>
+            <stop offset="78%" stop-color="#b0c2a3"/>
+            <stop offset="100%" stop-color="#9cb08e"/>
+          </linearGradient>
+          <linearGradient id="gar-tier-mid" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#f4dcd6"/>
+            <stop offset="45%" stop-color="#fbece8"/>
+            <stop offset="85%" stop-color="#ebc9c1"/>
+            <stop offset="100%" stop-color="#dfb7ae"/>
+          </linearGradient>
+          <linearGradient id="gar-tier-top" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#b8c9ac"/>
+            <stop offset="45%" stop-color="#cddbc2"/>
+            <stop offset="85%" stop-color="#a5b997"/>
+            <stop offset="100%" stop-color="#94a986"/>
+          </linearGradient>
+          <linearGradient id="gar-stand" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#dcd9d0"/>
+            <stop offset="40%" stop-color="#f2f0ea"/>
+            <stop offset="80%" stop-color="#c5c0b5"/>
+            <stop offset="100%" stop-color="#b0aa9e"/>
+          </linearGradient>
+
+          <!-- =============================================================== -->
+          <!-- THEME 3: CELESTIAL TWENTY-ONE GRADIENTS                         -->
+          <!-- =============================================================== -->
+          <linearGradient id="cel-tier-bottom" x1="0%" y1="0%" x2="100%" y2="12%">
+            <stop offset="0%" stop-color="#6e779c"/>
+            <stop offset="38%" stop-color="#8891b8"/>
+            <stop offset="76%" stop-color="#5d658a"/>
+            <stop offset="100%" stop-color="#4c5375"/>
+          </linearGradient>
+          <linearGradient id="cel-tier-mid" x1="0%" y1="0%" x2="100%" y2="10%">
+            <stop offset="0%" stop-color="#9e95b9"/>
+            <stop offset="42%" stop-color="#b7aed1"/>
+            <stop offset="80%" stop-color="#897fa6"/>
+            <stop offset="100%" stop-color="#756b93"/>
+          </linearGradient>
+          <linearGradient id="cel-tier-top" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#c4b7d9"/>
+            <stop offset="45%" stop-color="#dcd1ed"/>
+            <stop offset="85%" stop-color="#b1a2c9"/>
+            <stop offset="100%" stop-color="#9d8db7"/>
+          </linearGradient>
+
+          <!-- =============================================================== -->
+          <!-- THEME 4: WARM CHAMPAGNE & BERRY GRADIENTS                       -->
+          <!-- =============================================================== -->
+          <linearGradient id="cha-tier-bottom" x1="0%" y1="0%" x2="100%" y2="8%">
+            <stop offset="0%" stop-color="#f2dfc4"/>
+            <stop offset="40%" stop-color="#fbf0de"/>
+            <stop offset="78%" stop-color="#e8cfa8"/>
+            <stop offset="100%" stop-color="#dabd93"/>
+          </linearGradient>
+          <linearGradient id="cha-tier-mid" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#f7ead7"/>
+            <stop offset="45%" stop-color="#fff9f0"/>
+            <stop offset="82%" stop-color="#eedbc0"/>
+            <stop offset="100%" stop-color="#e0c9a8"/>
+          </linearGradient>
+          <linearGradient id="cha-tier-top" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#fbf2e3"/>
+            <stop offset="45%" stop-color="#fffdf9"/>
+            <stop offset="82%" stop-color="#f2e2c9"/>
+            <stop offset="100%" stop-color="#e4d0b2"/>
+          </linearGradient>
+
+          <!-- Strawberry Watercolor Gradient -->
+          <linearGradient id="strawberryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#e85d56"/>
+            <stop offset="60%" stop-color="#cf3d38"/>
+            <stop offset="100%" stop-color="#9e2420"/>
+          </linearGradient>
+
+          <!-- Reusable Hand-Drawn Strawberry Symbol -->
+          <g id="strawberryMotif">
+            <path d="M0,-9 C6,-9 9,-3 7,4 C5,9 2,12 0,12 C-2,12 -5,9 -7,4 C-9,-3 -6,-9 0,-9 Z" fill="url(#strawberryGrad)" stroke="#4a3531" stroke-width="1.2"/>
+            <path d="M-5,-8 C-2,-11 0,-7 0,-7 C0,-7 2,-11 5,-8 C3,-6 5,-4 2,-5 C0,-3 -2,-5 -5,-4 C-3,-6 -5,-8 -5,-8 Z" fill="#6d8c54" stroke="#4a3531" stroke-width="1"/>
+            <circle cx="-2.5" cy="-2" r="0.7" fill="#fce4b8"/>
+            <circle cx="2" cy="-1.5" r="0.7" fill="#fce4b8"/>
+            <circle cx="0" cy="2" r="0.7" fill="#fce4b8"/>
+            <circle cx="-3" cy="4" r="0.7" fill="#fce4b8"/>
+            <circle cx="2.5" cy="4.5" r="0.7" fill="#fce4b8"/>
+            <circle cx="0" cy="7.5" r="0.7" fill="#fce4b8"/>
+          </g>
+
+          <!-- Reusable Coquette Ribbon Bow Symbol -->
+          <g id="coquetteBow">
+            <path d="M-1,2 C-5,9 -9,16 -12,22 L-7,20 L-5,24 C-3,17 -1,9 0,3" fill="#f2b8be" stroke="#4a3531" stroke-width="1.15"/>
+            <path d="M1,2 C5,9 9,16 12,22 L7,20 L5,24 C3,17 1,9 0,3" fill="#f2b8be" stroke="#4a3531" stroke-width="1.15"/>
+            <path d="M-2,0 C-10,-8 -17,-4 -15,3 C-13,8 -5,5 -2,1 Z" fill="#f7cdd1" stroke="#4a3531" stroke-width="1.2"/>
+            <path d="M2,0 C10,-8 17,-4 15,3 C13,8 5,5 2,1 Z" fill="#f7cdd1" stroke="#4a3531" stroke-width="1.2"/>
+            <ellipse cx="0" cy="0.5" rx="2.6" ry="2.2" fill="#eda7ae" stroke="#4a3531" stroke-width="1.2"/>
+          </g>
+
+          <!-- Reusable Wildflower Blossom for Garden Theme -->
+          <g id="gardenBlossom">
+            <g fill="#f4cbc6" stroke="#4a3531" stroke-width="1.1">
+              <ellipse cx="0" cy="-7" rx="4.5" ry="6"/>
+              <ellipse cx="6.5" cy="-2" rx="6" ry="4.5" transform="rotate(15 6.5 -2)"/>
+              <ellipse cx="4" cy="6" rx="4.8" ry="6" transform="rotate(-35 4 6)"/>
+              <ellipse cx="-4" cy="6" rx="4.8" ry="6" transform="rotate(35 -4 6)"/>
+              <ellipse cx="-6.5" cy="-2" rx="6" ry="4.5" transform="rotate(-15 -6.5 -2)"/>
+            </g>
+            <circle cx="0" cy="0" r="3.2" fill="#e5b968" stroke="#4a3531" stroke-width="1"/>
+          </g>
+
+          <!-- Reusable Champagne Gold Starburst -->
+          <g id="goldStarMotif">
+            <polygon points="0,-7 2,-2 7,-1.5 3,2 4.2,7 0,4.2 -4.2,7 -3,2 -7,-1.5 -2,-2" fill="#ecc36d" stroke="#4a3531" stroke-width="1"/>
+          </g>
+
+          <!-- Slice Bite Clip Paths (0 = whole slice, 1 = 1 bite, 2 = 2 bites, 3 = eaten) -->
+          <linearGradient id="sliceCurvedWallLight" x1="0%" y1="0%" x2="100%" y2="8%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.28"/>
+            <stop offset="28%" stop-color="#ffffff" stop-opacity="0.05"/>
+            <stop offset="68%" stop-color="#3d231c" stop-opacity="0.16"/>
+            <stop offset="92%" stop-color="#3d231c" stop-opacity="0.24"/>
+            <stop offset="100%" stop-color="#fff8f0" stop-opacity="0.18"/>
+          </linearGradient>
+<linearGradient id="spongeBakedDepth" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#8c5828" stop-opacity="0.12"/>
+            <stop offset="18%" stop-color="#ffffff" stop-opacity="0.10"/>
+            <stop offset="78%" stop-color="#ffffff" stop-opacity="0.0"/>
+            <stop offset="95%" stop-color="#9e6430" stop-opacity="0.16"/>
+            <stop offset="100%" stop-color="#7a4619" stop-opacity="0.28"/>
+          </linearGradient>
+<linearGradient id="jamGlossOverlay" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#2b070c" stop-opacity="0.32"/>
+            <stop offset="32%" stop-color="#ffffff" stop-opacity="0.22"/>
+            <stop offset="55%" stop-color="#ffffff" stop-opacity="0.0"/>
+            <stop offset="100%" stop-color="#1f0408" stop-opacity="0.38"/>
+          </linearGradient>
+<radialGradient id="pearl3DGrad" cx="35%" cy="30%" r="65%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="55%" stop-color="#fdf4eb"/>
+            <stop offset="88%" stop-color="#e5d0be"/>
+            <stop offset="100%" stop-color="#cdb29d"/>
+          </radialGradient>
+<radialGradient id="sliceContactShadow" cx="52%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#3a2219" stop-opacity="0.46"/>
+            <stop offset="58%" stop-color="#6e4b3c" stop-opacity="0.22"/>
+            <stop offset="100%" stop-color="#6e4b3c" stop-opacity="0"/>
+          </radialGradient>
+<linearGradient id="silverForkGrad" x1="0%" y1="0%" x2="100%" y2="30%">
+            <stop offset="0%" stop-color="#f7f4ef"/>
+            <stop offset="35%" stop-color="#d8d2c7"/>
+            <stop offset="65%" stop-color="#ece7df"/>
+            <stop offset="100%" stop-color="#b5ada0"/>
+          </linearGradient>
+
+<clipPath id="sliceBiteClip-0">
+            <rect x="480" y="310" width="320" height="225" />
+          </clipPath>
+          <clipPath id="sliceBiteClip-1">
+            <!-- Natural scalloped bite removing the sharp front-left tip (X < 596) -->
+            <path d="M594,340 C602,396 588,412 597,426 C587,442 601,458 591,472 C598,482 595,492 590,504 L765,515 L765,320 Z" />
+          </clipPath>
+          <clipPath id="sliceBiteClip-2">
+            <!-- Second scalloped bite removing the middle section (X < 644), leaving the frosted back half -->
+            <path d="M642,335 C650,388 636,408 646,424 C635,440 649,458 639,474 C646,484 643,494 638,506 L765,515 L765,320 Z" />
+          </clipPath>
+          <clipPath id="sliceBiteClip-3">
+            <!-- Fully eaten (only crumbs, berry smear & garnish left on plate) -->
+            <rect x="0" y="0" width="0" height="0" />
+          </clipPath>
+        </defs>
+
+        <!-- ===================================================== -->
+        <!-- 1. TABLE WATERCOLOR SHADOWS & AMBIENT SPARKLES        -->
+        <!-- ===================================================== -->
+        <ellipse cx="330" cy="512" rx="215" ry="25" fill="url(#tableShadowGrad)" />
+
+        <g id="ambientSparkles" opacity="0.85">
+          <path d="M120,210 L123,220 L133,223 L123,226 L120,236 L117,226 L107,223 L117,220 Z" fill="#dfb160" stroke="#4a3531" stroke-width="0.9"/>
+          <path d="M535,175 L537,183 L545,185 L537,187 L535,195 L533,187 L525,185 L533,183 Z" fill="#dfb160" stroke="#4a3531" stroke-width="0.9"/>
+          <path d="M98,360 L100,366 L106,368 L100,370 L98,376 L96,370 L90,368 L96,366 Z" fill="#e6a8ad" stroke="#4a3531" stroke-width="0.8"/>
+          <circle cx="515" cy="140" r="2.5" fill="#dfb160"/>
+          <circle cx="148" cy="175" r="2.2" fill="#dfb160"/>
+          <circle cx="560" cy="265" r="2.2" fill="#e6a8ad"/>
+        </g>
+
+        <!-- ===================================================== -->
+        <!-- 2. PEDESTAL CAKE STAND (Visible Under the Cut Gap!)   -->
+        <!-- ===================================================== -->
+        <g id="cakeStandGroup" filter="url(#watercolorPaper)">
+          <!-- Pedestal Base Foot -->
+          <path d="M240,502 C240,490 275,484 330,484 C385,484 420,490 420,502 C420,511 380,517 330,517 C280,517 240,511 240,502 Z"
+                id="standBasePath" fill="url(#coq-stand)" stroke="#4a3531" stroke-width="1.6"/>
+          <!-- Pedestal Turned Stem -->
+          <path d="M302,422 C306,449 295,480 272,498 C305,504 355,504 388,498 C365,480 354,449 358,422 Z"
+                id="standStemPath" fill="url(#coq-stand)" stroke="#4a3531" stroke-width="1.6"/>
+          <!-- Pedestal Platter Rim Under Cake -->
+          <ellipse cx="330" cy="408" rx="202" ry="33" id="standRimUnder" fill="#c9a286" stroke="#4a3531" stroke-width="1.6"/>
+          <!-- Pedestal Platter Top Surface (Exposed when bottom-tier wedge is removed!) -->
+          <ellipse cx="330" cy="401" rx="202" ry="31" id="standPlateTop" fill="#f7ede2" stroke="#4a3531" stroke-width="1.6"/>
+          <!-- Subtle inner platter groove ring -->
+          <ellipse cx="330" cy="401" rx="176" ry="26.5" fill="none" stroke="#baa08e" stroke-width="0.9" stroke-dasharray="4 3" opacity="0.65"/>
+        </g>
+
+        <!-- ===================================================== -->
+        <!-- 3. INTERACTIVE 3-STORY CAKE GROUP                     -->
+        <!-- Layered in strict 3D painter's order:                 -->
+        <!--   A. Bottom Tier (Clipped when slice is cut)          -->
+        <!--   B. 3D Recessed Cavity in Bottom Tier                -->
+        <!--   C. Middle Tier (100% Intact, sits on Bottom Tier)   -->
+        <!--   D. Top Tier + Topper + Candles (100% Intact)        -->
+        <!-- ===================================================== -->
+        <g id="mainCakeGroup" filter="url(#watercolorPaper)">
+
+          <!-- ================================================= -->
+          <!-- A. TIER 1: BOTTOM STORY & ITS DECORATIONS         -->
+          <!-- Clipped by #bottomTierCutoutClip when cut so the  -->
+          <!-- outer wall & pearl border between X=352 and X=458 -->
+          <!-- genuinely disappear to expose the cake stand!     -->
+          <!-- ================================================= -->
+          <g id="bottomTierClippedWrapper" clip-path="url(#bottomTierIntactClip)">
+            <!-- Bottom Tier Cylinder Body (cx=330, top cy=296 rx=164 ry=25, bot cy=396 rx=164 ry=27) -->
+            <path id="tier1Body" d="M166,296 L166,396 A164,27 0 0,0 494,396 L494,296 Z"
+                  fill="url(#coq-tier-bottom)" stroke="#4a3531" stroke-width="1.7"/>
+            <!-- Bottom Tier Top Surface Ellipse -->
+            <ellipse id="tier1Top" cx="330" cy="296" rx="164" ry="25"
+                     fill="#fae7e9" stroke="#4a3531" stroke-width="1.6"/>
+
+            <!-- Bottom Tier Theme Decoration A: Coquette Ruffles -->
+            <g id="tier1-deco-coquette">
+              <!-- Bottom Piped Pearl & Ruffle Border (Disappears in the gap when cut!) -->
+              <path d="M164,396 Q176,408 189,399 Q202,411 215,402 Q228,414 241,405 Q254,417 268,408 Q282,420 296,410 Q312,422 330,412 Q348,422 364,410 Q378,420 392,408 Q406,417 419,405 Q432,414 445,402 Q458,411 471,399 Q484,408 496,396"
+                    fill="#fdf3ee" stroke="#4a3531" stroke-width="1.4"/>
+              <!-- Lambeth Vintage Double Ruffle Swags -->
+              <path d="M166,312 Q207,366 248,320 Q289,374 330,322 Q371,374 412,320 Q453,366 494,312"
+                    fill="none" stroke="#fff9f5" stroke-width="7" stroke-linecap="round"/>
+              <path d="M166,312 Q207,366 248,320 Q289,374 330,322 Q371,374 412,320 Q453,366 494,312"
+                    fill="none" stroke="#4a3531" stroke-width="1.4"/>
+              <path d="M166,322 Q207,376 248,330 Q289,384 330,332 Q371,384 412,330 Q453,376 494,322"
+                    fill="none" stroke="#f4c5cb" stroke-width="5" stroke-linecap="round"/>
+              <path d="M166,322 Q207,376 248,330 Q289,384 330,332 Q371,384 412,330 Q453,376 494,322"
+                    fill="none" stroke="#4a3531" stroke-width="1.3"/>
+              <!-- Coquette Bows & Strawberries on Bottom Tier -->
+              <use href="#coquetteBow" x="248" y="320" />
+              <use href="#coquetteBow" x="330" y="324" />
+              <!-- Note: The bow at x=412 is right in the cut wedge (352..458), so it disappears from the cake and rides out on the slice! -->
+              <use href="#coquetteBow" x="412" y="320" />
+              <use href="#strawberryMotif" x="195" y="394" transform="rotate(-12 195 394)" />
+              <use href="#strawberryMotif" x="432" y="398" transform="rotate(-8 432 398)" />
+              <use href="#strawberryMotif" x="472" y="394" transform="rotate(16 472 394) scale(0.9)" />
+            </g>
+
+            <!-- Bottom Tier Theme Decoration B: Garden Party & Blooms -->
+            <g id="tier1-deco-garden" class="hidden">
+              <!-- Piped Pearl Base Border -->
+              <path d="M164,396 Q180,408 196,399 Q212,411 228,403 Q244,415 262,407 Q280,419 300,410 Q315,421 330,412 Q345,421 360,410 Q380,419 398,407 Q416,415 432,403 Q448,411 464,399 Q480,408 496,396"
+                    fill="#f4f1ea" stroke="#4a3531" stroke-width="1.3"/>
+              <!-- Pressed Wildflower Stems & Botanical Vines on Bottom Tier -->
+              <g stroke="#4a3531" stroke-width="1.3" fill="none">
+                <path d="M210,404 Q225,365 218,335" stroke="#5b7049" stroke-width="1.6"/>
+                <ellipse cx="212" cy="368" rx="8" ry="4" transform="rotate(25 212 368)" fill="#8fa67e"/>
+                <use href="#gardenBlossom" x="218" y="335" transform="scale(0.9)" style="transform-box: fill-box; transform-origin: center;"/>
+
+                <path d="M295,412 Q308,370 318,342" stroke="#5b7049" stroke-width="1.6"/>
+                <ellipse cx="302" cy="378" rx="8" ry="4" transform="rotate(-20 302 378)" fill="#8fa67e"/>
+                <use href="#gardenBlossom" x="318" y="342" />
+
+                <!-- Right Vine (Inside the cut wedge X=352..458 so it detaches with the slice!) -->
+                <path d="M375,412 Q415,385 445,342" stroke="#5b7049" stroke-width="1.6"/>
+                <ellipse cx="398" cy="390" rx="9" ry="4.5" transform="rotate(-20 398 390)" fill="#8fa67e"/>
+                <ellipse cx="435" cy="362" rx="9" ry="4.5" transform="rotate(-35 435 362)" fill="#8fa67e"/>
+                <use href="#gardenBlossom" x="415" y="376" />
+                <use href="#gardenBlossom" x="446" y="344" transform="scale(0.85)" style="transform-box: fill-box; transform-origin: center;"/>
+              </g>
+            </g>
+
+            <!-- Bottom Tier Theme Decoration C: Celestial Twenty-One -->
+            <g id="tier1-deco-celestial" class="hidden">
+              <!-- Starry Indigo Base Piping -->
+              <path d="M164,396 Q180,408 196,399 Q212,411 228,403 Q244,415 262,407 Q280,419 300,410 Q315,421 330,412 Q345,421 360,410 Q380,419 398,407 Q416,415 432,403 Q448,411 464,399 Q480,408 496,396"
+                    fill="#d7cde8" stroke="#4a3531" stroke-width="1.3"/>
+              <!-- Golden Constellations & Crescent Moon on Bottom Tier -->
+              <g stroke="#f3d285" stroke-width="1.2" fill="none">
+                <polyline points="205,345 242,328 278,352 312,338" stroke-dasharray="2.5 2.5"/>
+                <polyline points="365,360 404,335 442,352 472,330" stroke-dasharray="2.5 2.5"/>
+                <path d="M285,344 A14,14 0 1,0 302,362 A10,10 0 1,1 285,344 Z" fill="#f5d587" stroke="#4a3531" stroke-width="1"/>
+                <path d="M402,340 A13,13 0 1,0 418,356 A9.5,9.5 0 1,1 402,340 Z" fill="#f5d587" stroke="#4a3531" stroke-width="1"/>
+                <circle cx="242" cy="328" r="2.8" fill="#fff3c4" stroke="none"/>
+                <circle cx="278" cy="352" r="2.5" fill="#fff3c4" stroke="none"/>
+                <circle cx="442" cy="352" r="3" fill="#fff3c4" stroke="none"/>
+                <circle cx="378" cy="348" r="2.4" fill="#fff3c4" stroke="none"/>
+              </g>
+            </g>
+
+            <!-- Bottom Tier Theme Decoration D: Warm Champagne & Berry -->
+            <g id="tier1-deco-champagne" class="hidden">
+              <!-- Vanilla Cream Pearl Base Border -->
+              <path d="M164,396 Q178,408 192,399 Q208,411 224,403 Q242,415 260,407 Q278,419 298,410 Q314,421 330,412 Q346,421 362,410 Q382,419 400,407 Q418,415 436,403 Q452,411 468,399 Q482,408 496,396"
+                    fill="#fffaf0" stroke="#4a3531" stroke-width="1.3"/>
+              <!-- Champagne Gold Garland Swags & Stars -->
+              <path d="M166,316 Q220,362 275,320 Q330,366 385,320 Q440,362 494,316"
+                    fill="none" stroke="#fffaf0" stroke-width="5.5" stroke-linecap="round"/>
+              <path d="M166,316 Q220,362 275,320 Q330,366 385,320 Q440,362 494,316"
+                    fill="none" stroke="#4a3531" stroke-width="1.3"/>
+              <use href="#goldStarMotif" x="235" y="362" />
+              <use href="#goldStarMotif" x="315" y="370" transform="scale(0.85)" style="transform-box: fill-box; transform-origin: center;"/>
+              <use href="#goldStarMotif" x="405" y="366" />
+              <use href="#strawberryMotif" x="275" y="320" transform="scale(0.88)" style="transform-box: fill-box; transform-origin: center;"/>
+              <use href="#strawberryMotif" x="385" y="320" transform="scale(0.88)" style="transform-box: fill-box; transform-origin: center;"/>
+              <!-- Fresh Blueberries -->
+              <g fill="#6d64a8" stroke="#4a3531" stroke-width="1.1">
+                <circle cx="428" cy="396" r="5.5"/>
+                <circle cx="438" cy="400" r="5"/>
+                <circle cx="205" cy="392" r="5.5"/>
+              </g>
+            </g>
+          </g>
+
+          <!-- ================================================================= -->
+          <!-- B. PHYSICALLY REALISTIC 3D RECESSED CAVITY IN BOTTOM TIER         -->
+          <!-- Revealed when slice is cut. Shows:                                -->
+          <!--  1. Exposed Cake Stand Platter Floor & Inner Cast Shadow + Crumbs -->
+          <!--  2. Left Interior Cut Wall (X: 352 -> 382) in warm shadow         -->
+          <!--  3. Right Interior Cut Wall (X: 382 -> 458) in warm light         -->
+          <!--  4. Sliced Outer Frosting & Ruffle/Pearl Rind at X=352 and X=458  -->
+          <!-- ================================================================= -->
+          <g id="bottomTierCavityGroup">
+            <!-- 1. Exposed Porcelain Cake Stand Floor inside the missing wedge -->
+            <!-- Wedge floor footprint: (352,423) -> inner apex (382,399) -> (458,413) -> outer rim arc -->
+            <path d="M352,423 L382,399 L458,413 A164,27 0 0,1 352,423 Z"
+                  fill="url(#cavityFloorShadow)" stroke="none"/>
+            <!-- Subtle Ghost Imprint Line on Platter where the Missing Wedge Base Sat -->
+            <path d="M352,422 A164,27 0 0,0 458,412"
+                  fill="none" stroke="#bda391" stroke-width="1.1" stroke-dasharray="3 3" opacity="0.75"/>
+            <!-- Realistic Tiny Cake Crumbs Left Behind on the Exposed Cake Stand Floor -->
+            <g id="cavityFloorCrumbs">
+              <circle cx="388" cy="409" r="2.1" fill="#d9a76a"/>
+              <circle cx="404" cy="413" r="1.6" fill="#c94a58"/>
+              <circle cx="418" cy="408" r="2.4" fill="#e2b578"/>
+              <circle cx="374" cy="416" r="1.5" fill="#d9a76a"/>
+              <circle cx="432" cy="412" r="1.8" fill="#c94a58"/>
+            </g>
+
+            <!-- 2. LEFT INTERIOR CUT WALL (X: 352 -> 382, recessed under Middle Tier) -->
+            <g id="cavityLeftWall">
+              <!-- Top Frosting Layer (t = 0.00 to 0.08) -->
+              <polygon id="cavLeftFrostTop" points="352,321 382,305 382,312.5 352,329" fill="#fdf3ee"/>
+              <!-- Sponge Layer 1 (t = 0.08 to 0.34) -->
+              <polygon id="cavLeftSponge1" points="352,329 382,312.5 382,337 352,355.5" fill="#ecd2ad"/>
+              <!-- Buttercream Filling 1 (t = 0.34 to 0.38) -->
+              <polygon id="cavLeftCream1" points="352,355.5 382,337 382,340.7 352,359.5" fill="#fffaf0"/>
+              <!-- Berry Compote Filling 1 (t = 0.38 to 0.43) -->
+              <polygon id="cavLeftJam1" points="352,359.5 382,340.7 382,345.5 352,365" fill="#a83542"/>
+              <!-- Sponge Layer 2 (t = 0.43 to 0.68) -->
+              <polygon id="cavLeftSponge2" points="352,365 382,345.5 382,369 352,390.5" fill="#e5b5be"/>
+              <!-- Buttercream Filling 2 (t = 0.68 to 0.72) -->
+              <polygon id="cavLeftCream2" points="352,390.5 382,369 382,372.7 352,394.5" fill="#fffaf0"/>
+              <!-- Berry Compote Filling 2 (t = 0.72 to 0.77) -->
+              <polygon id="cavLeftJam2" points="352,394.5 382,372.7 382,377.5 352,399.5" fill="#a83542"/>
+              <!-- Sponge Layer 3 (t = 0.77 to 1.00) -->
+              <polygon id="cavLeftSponge3" points="352,399.5 382,377.5 382,399 352,423" fill="#ecd2ad"/>
+
+              <!-- Stippled Crumb Texture on Left Cut Wall -->
+              <g fill="#b58952" opacity="0.55">
+                <circle cx="362" cy="338" r="1.1"/><circle cx="372" cy="328" r="1.2"/><circle cx="366" cy="346" r="1"/>
+                <circle cx="360" cy="375" r="1.1"/><circle cx="374" cy="362" r="1.2"/>
+                <circle cx="364" cy="408" r="1.2"/><circle cx="375" cy="392" r="1.1"/>
+              </g>
+
+              <!-- Warm Inner Shadow Overlay on Left Wall -->
+              <polygon points="352,321 382,305 382,399 352,423" fill="url(#leftWallShade)" stroke="#4a3531" stroke-width="1.4" stroke-linejoin="round"/>
+            </g>
+
+            <!-- 3. RIGHT INTERIOR CUT WALL (X: 382 -> 458, catching soft light) -->
+            <g id="cavityRightWall">
+              <!-- Top Frosting Layer (t = 0.00 to 0.08) -->
+              <polygon id="cavRightFrostTop" points="382,305 458,312 458,320 382,312.5" fill="#fff9f5"/>
+              <!-- Sponge Layer 1 (t = 0.08 to 0.34) -->
+              <polygon id="cavRightSponge1" points="382,312.5 458,320 458,346.5 382,337" fill="#fae7c8"/>
+              <!-- Buttercream Filling 1 (t = 0.34 to 0.38) -->
+              <polygon id="cavRightCream1" points="382,337 458,346.5 458,350.5 382,340.7" fill="#fffdf9"/>
+              <!-- Berry Compote Filling 1 (t = 0.38 to 0.43) -->
+              <polygon id="cavRightJam1" points="382,340.7 458,350.5 458,355.5 382,345.5" fill="#c94a58"/>
+              <!-- Sponge Layer 2 (t = 0.43 to 0.68) -->
+              <polygon id="cavRightSponge2" points="382,345.5 458,355.5 458,380.5 382,369" fill="#f3c5cc"/>
+              <!-- Buttercream Filling 2 (t = 0.68 to 0.72) -->
+              <polygon id="cavRightCream2" points="382,369 458,380.5 458,384.5 382,372.7" fill="#fffdf9"/>
+              <!-- Berry Compote Filling 2 (t = 0.72 to 0.77) -->
+              <polygon id="cavRightJam2" points="382,372.7 458,384.5 458,389.8 382,377.5" fill="#c94a58"/>
+              <!-- Sponge Layer 3 (t = 0.77 to 1.00) -->
+              <polygon id="cavRightSponge3" points="382,377.5 458,389.8 458,413 382,399" fill="#fae7c8"/>
+
+              <!-- Stippled Sponge Pores on Right Cut Wall -->
+              <g fill="#c49760" opacity="0.6">
+                <circle cx="396" cy="324" r="1.2"/><circle cx="418" cy="331" r="1.4"/><circle cx="440" cy="336" r="1.1"/><circle cx="408" cy="334" r="1"/>
+                <circle cx="395" cy="356" r="1.3"/><circle cx="422" cy="364" r="1.2"/><circle cx="444" cy="370" r="1.3"/>
+                <circle cx="402" cy="390" r="1.3"/><circle cx="428" cy="396" r="1.4"/><circle cx="446" cy="402" r="1.1"/>
+              </g>
+
+              <!-- Fine-line dividers for jam stripes -->
+              <line x1="382" y1="337" x2="458" y2="346.5" stroke="#4a3531" stroke-width="0.9" opacity="0.65"/>
+              <line x1="382" y1="345.5" x2="458" y2="355.5" stroke="#4a3531" stroke-width="0.9" opacity="0.65"/>
+              <line x1="382" y1="369" x2="458" y2="380.5" stroke="#4a3531" stroke-width="0.9" opacity="0.65"/>
+              <line x1="382" y1="377.5" x2="458" y2="389.8" stroke="#4a3531" stroke-width="0.9" opacity="0.65"/>
+
+              <!-- Soft Lighting Overlay & Crisp Ink Outline on Right Wall -->
+              <polygon points="382,305 458,312 458,413 382,399" fill="url(#rightWallShade)" stroke="#4a3531" stroke-width="1.4" stroke-linejoin="round"/>
+            </g>
+
+            <!-- 4. SLICED OUTER FROSTING RIND & CUT RUFFLE/PEARL CROSS-SECTIONS -->
+            <!-- Left Outer Frosting Rind at X=352 -->
+            <polygon id="cavLeftFrostRind" points="347.5,321 352,321 352,423 347.5,423" fill="#fae7e9" stroke="#4a3531" stroke-width="1.2" stroke-linejoin="round"/>
+            <!-- Left Cut Pearl Cross-Section -->
+            <ellipse cx="349.5" cy="419" rx="4.5" ry="5.5" fill="#fff9f5" stroke="#4a3531" stroke-width="1.2"/>
+            <!-- Right Outer Frosting Rind at X=458 -->
+            <polygon id="cavRightFrostRind" points="458,312 462.5,311.5 462.5,412.5 458,413" fill="#fae7e9" stroke="#4a3531" stroke-width="1.2" stroke-linejoin="round"/>
+            <!-- Right Cut Pearl Cross-Section -->
+            <ellipse cx="460.5" cy="409" rx="4.5" ry="5.5" fill="#fff9f5" stroke="#4a3531" stroke-width="1.2"/>
+          </g>
+
+          <!-- ================================================= -->
+          <!-- C. TIER 2: MIDDLE STORY (100% UNTOUCHED & INTACT) -->
+          <!-- Sits directly on top of Bottom Tier at cy=290     -->
+          <!-- ================================================= -->
+          <g id="middleTierGroup">
+            <!-- Middle Tier Cylinder Body (cx=330, top cy=204, bot cy=290, rx=118) -->
+            <path id="tier2Body" d="M212,204 L212,290 A118,18 0 0,0 448,290 L448,204 Z"
+                  fill="url(#coq-tier-mid)" stroke="#4a3531" stroke-width="1.7"/>
+            <ellipse id="tier2Top" cx="330" cy="204" rx="118" ry="16"
+                     fill="#fffaf3" stroke="#4a3531" stroke-width="1.6"/>
+
+            <!-- Middle Tier Theme Decoration A: Coquette Ruffles -->
+            <g id="tier2-deco-coquette">
+              <!-- Middle Tier Base Piping (Remains 100% continuous above the bottom-tier cavity!) -->
+              <path d="M210,290 Q224,301 238,292 Q252,303 267,294 Q282,305 297,296 Q314,306 330,297 Q346,306 363,296 Q378,305 393,294 Q408,303 422,292 Q436,301 450,290"
+                    fill="#fdf3ee" stroke="#4a3531" stroke-width="1.4"/>
+              <!-- Middle Tier Lambeth Ruffle Swags -->
+              <path d="M212,216 Q251,260 290,220 Q330,264 370,220 Q409,260 448,216"
+                    fill="none" stroke="#f7cfd4" stroke-width="6.5" stroke-linecap="round"/>
+              <path d="M212,216 Q251,260 290,220 Q330,264 370,220 Q409,260 448,216"
+                    fill="none" stroke="#4a3531" stroke-width="1.4"/>
+              <path d="M212,225 Q251,269 290,229 Q330,273 370,229 Q409,269 448,225"
+                    fill="none" stroke="#fff9f5" stroke-width="4.5" stroke-linecap="round"/>
+              <path d="M212,225 Q251,269 290,229 Q330,273 370,229 Q409,269 448,225"
+                    fill="none" stroke="#4a3531" stroke-width="1.2"/>
+              <use href="#coquetteBow" x="290" y="220" transform="scale(0.92)" style="transform-box: fill-box; transform-origin: center;"/>
+              <use href="#coquetteBow" x="370" y="220" transform="scale(0.92)" style="transform-box: fill-box; transform-origin: center;"/>
+              <use href="#strawberryMotif" x="213" y="207" transform="rotate(-15 213 207)" />
+              <use href="#strawberryMotif" x="208" y="292" transform="rotate(-15 208 292)" />
+              <use href="#strawberryMotif" x="448" y="292" transform="rotate(15 448 292)" />
+            </g>
+
+            <!-- Middle Tier Theme Decoration B: Garden Party & Blooms -->
+            <g id="tier2-deco-garden" class="hidden">
+              <path d="M210,290 Q225,300 240,292 Q256,302 272,294 Q290,304 310,296 Q330,305 350,296 Q370,304 388,294 Q404,302 420,292 Q435,300 450,290"
+                    fill="#f4f1ea" stroke="#4a3531" stroke-width="1.3"/>
+              <g stroke="#4a3531" stroke-width="1.3" fill="none">
+                <path d="M202,292 Q238,266 278,286" stroke="#5b7049" stroke-width="1.6"/>
+                <ellipse cx="218" cy="270" rx="10" ry="5" transform="rotate(25 218 270)" fill="#8fa67e"/>
+                <ellipse cx="262" cy="273" rx="9" ry="4.5" transform="rotate(-15 262 273)" fill="#8fa67e"/>
+                <use href="#gardenBlossom" x="236" y="280" transform="scale(1.08)" style="transform-box: fill-box; transform-origin: center;"/>
+                <use href="#gardenBlossom" x="210" y="290" transform="scale(0.78)" style="transform-box: fill-box; transform-origin: center;"/>
+              </g>
+            </g>
+
+            <!-- Middle Tier Theme Decoration C: Celestial Twenty-One -->
+            <g id="tier2-deco-celestial" class="hidden">
+              <path d="M210,290 Q225,300 240,292 Q256,302 272,294 Q290,304 310,296 Q330,305 350,296 Q370,304 388,294 Q404,302 420,292 Q435,300 450,290"
+                    fill="#d7cde8" stroke="#4a3531" stroke-width="1.3"/>
+              <!-- Pastel Watercolor Balloon Cluster on Left Side -->
+              <g stroke="#4a3531" stroke-width="1.2">
+                <ellipse cx="226" cy="215" rx="17" ry="21" fill="#d4c5ec"/>
+                <ellipse cx="250" cy="196" rx="15" ry="19" fill="#b4c8e4"/>
+                <ellipse cx="218" cy="250" rx="16" ry="20" fill="#e8c5d8"/>
+                <ellipse cx="244" cy="238" rx="15" ry="18" fill="#f3e1ec"/>
+              </g>
+              <!-- Golden Moon & Stars on Middle Tier -->
+              <g stroke="#f3d285" stroke-width="1.2" fill="none">
+                <polyline points="275,246 312,230 348,248 386,233" stroke-dasharray="2 2"/>
+                <path d="M328,233 A12,12 0 1,0 343,250 A9,9 0 1,1 328,233 Z" fill="#f5d587" stroke="#4a3531" stroke-width="1"/>
+                <circle cx="312" cy="230" r="2.8" fill="#fff3c4" stroke="none"/>
+                <circle cx="386" cy="233" r="2.5" fill="#fff3c4" stroke="none"/>
+              </g>
+            </g>
+
+            <!-- Middle Tier Theme Decoration D: Warm Champagne & Berry -->
+            <g id="tier2-deco-champagne" class="hidden">
+              <path d="M210,290 Q225,300 240,292 Q256,302 272,294 Q290,304 310,296 Q330,305 350,296 Q370,304 388,294 Q404,302 420,292 Q435,300 450,290"
+                    fill="#fffaf0" stroke="#4a3531" stroke-width="1.3"/>
+              <path d="M212,220 Q271,260 330,222 Q389,260 448,220" fill="none" stroke="#fffaf0" stroke-width="5" stroke-linecap="round"/>
+              <path d="M212,220 Q271,260 330,222 Q389,260 448,220" fill="none" stroke="#4a3531" stroke-width="1.2"/>
+              <use href="#goldStarMotif" x="275" y="256" transform="scale(0.85)" style="transform-box: fill-box; transform-origin: center;"/>
+              <use href="#goldStarMotif" x="382" y="254" transform="scale(0.85)" style="transform-box: fill-box; transform-origin: center;"/>
+              <use href="#strawberryMotif" x="330" y="222" transform="scale(0.82)" style="transform-box: fill-box; transform-origin: center;"/>
+            </g>
+          </g>
+
+          <!-- ================================================= -->
+          <!-- D. TIER 3: TOP STORY (100% UNTOUCHED & INTACT)    -->
+          <!-- ================================================= -->
+          <g id="topTierGroup">
+            <!-- Top Tier Cylinder Body (cx=330, top cy=126, bot cy=200, rx=82) -->
+            <path id="tier3Body" d="M248,126 L248,200 A82,12 0 0,0 412,200 L412,126 Z"
+                  fill="url(#coq-tier-top)" stroke="#4a3531" stroke-width="1.7"/>
+            <ellipse id="tier3Top" cx="330" cy="126" rx="82" ry="11"
+                     fill="#fdf0f0" stroke="#4a3531" stroke-width="1.6"/>
+
+            <!-- Top Tier Theme Decoration A: Coquette Ruffles -->
+            <g id="tier3-deco-coquette">
+              <path d="M246,200 Q262,210 278,202 Q295,212 312,204 Q330,213 348,204 Q365,212 382,202 Q398,210 414,200"
+                    fill="#fdf3ee" stroke="#4a3531" stroke-width="1.3"/>
+              <path d="M248,136 Q275,172 302,140 Q330,174 358,140 Q385,172 412,136"
+                    fill="none" stroke="#fff9f5" stroke-width="5.5" stroke-linecap="round"/>
+              <path d="M248,136 Q275,172 302,140 Q330,174 358,140 Q385,172 412,136"
+                    fill="none" stroke="#4a3531" stroke-width="1.3"/>
+              <use href="#coquetteBow" x="302" y="140" transform="scale(0.82)" style="transform-box: fill-box; transform-origin: center;"/>
+              <use href="#coquetteBow" x="358" y="140" transform="scale(0.82)" style="transform-box: fill-box; transform-origin: center;"/>
+              <use href="#strawberryMotif" x="430" y="200" transform="rotate(14 430 200)" />
+              <use href="#strawberryMotif" x="318" y="120" transform="rotate(-8 318 120)" />
+              <use href="#strawberryMotif" x="342" y="120" transform="rotate(10 342 120)" />
+            </g>
+
+            <!-- Top Tier Theme Decoration B: Garden Party & Blooms -->
+            <g id="tier3-deco-garden" class="hidden">
+              <path d="M246,200 Q262,210 278,202 Q295,212 312,204 Q330,213 348,204 Q365,212 382,202 Q398,210 414,200"
+                    fill="#f4f1ea" stroke="#4a3531" stroke-width="1.3"/>
+              <!-- Bunting Banner on Top Tier -->
+              <g stroke="#4a3531" stroke-width="1.3">
+                <line x1="264" y1="130" x2="256" y2="54" stroke-width="2.2" stroke="#8c6246"/>
+                <line x1="396" y1="130" x2="404" y2="54" stroke-width="2.2" stroke="#8c6246"/>
+                <path d="M258,66 Q330,92 402,66" fill="none"/>
+                <polygon points="276,71 290,75 282,94" fill="#f5dcd6"/>
+                <polygon points="298,76 312,79 304,98" fill="#fbf2e3"/>
+                <polygon points="322,79 338,79 330,99" fill="#c5d4b8"/>
+                <polygon points="348,79 362,76 355,98" fill="#f5dcd6"/>
+                <polygon points="370,75 384,71 378,94" fill="#fbf2e3"/>
+                <path d="M248,136 Q330,164 412,136" fill="none"/>
+                <polygon points="265,141 282,146 272,167" fill="#c5d4b8"/>
+                <polygon points="292,148 308,151 300,172" fill="#fbf2e3"/>
+                <polygon points="320,152 340,152 330,174" fill="#f5dcd6"/>
+                <polygon points="352,151 368,148 360,172" fill="#c5d4b8"/>
+                <polygon points="378,146 395,141 387,167" fill="#fbf2e3"/>
+              </g>
+              <ellipse cx="408" cy="185" rx="9" ry="4.5" transform="rotate(-25 408 185)" fill="#8fa67e" stroke="#4a3531" stroke-width="1.2"/>
+              <use href="#gardenBlossom" x="392" y="196" transform="scale(0.95)" style="transform-box: fill-box; transform-origin: center;"/>
+            </g>
+
+            <!-- Top Tier Theme Decoration C: Celestial Twenty-One -->
+            <g id="tier3-deco-celestial" class="hidden">
+              <path d="M246,200 Q262,210 278,202 Q295,212 312,204 Q330,213 348,204 Q365,212 382,202 Q398,210 414,200"
+                    fill="#d7cde8" stroke="#4a3531" stroke-width="1.3"/>
+              <ellipse cx="412" cy="152" rx="15" ry="18" fill="#d4c5ec" stroke="#4a3531" stroke-width="1.2"/>
+              <ellipse cx="428" cy="172" rx="14" ry="17" fill="#b4c8e4" stroke="#4a3531" stroke-width="1.2"/>
+              <path d="M352,155 A10,10 0 1,0 364,168 A7.5,7.5 0 1,1 352,155 Z" fill="#f5d587" stroke="#4a3531" stroke-width="1"/>
+              <circle cx="295" cy="164" r="2.5" fill="#fff3c4"/>
+              <circle cx="328" cy="172" r="2.2" fill="#fff3c4"/>
+            </g>
+
+            <!-- Top Tier Theme Decoration D: Warm Champagne & Berry -->
+            <g id="tier3-deco-champagne" class="hidden">
+              <path d="M246,200 Q262,210 278,202 Q295,212 312,204 Q330,213 348,204 Q365,212 382,202 Q398,210 414,200"
+                    fill="#fffaf0" stroke="#4a3531" stroke-width="1.3"/>
+              <use href="#goldStarMotif" x="295" y="164" transform="scale(0.8)" style="transform-box: fill-box; transform-origin: center;"/>
+              <use href="#goldStarMotif" x="365" y="164" transform="scale(0.8)" style="transform-box: fill-box; transform-origin: center;"/>
+              <use href="#strawberryMotif" x="330" y="120" transform="scale(0.88)" style="transform-box: fill-box; transform-origin: center;"/>
+            </g>
+          </g>
+
+          <!-- ================================================= -->
+          <!-- FLICKERING BIRTHDAY CANDLES GROUP                 -->
+          <!-- ================================================= -->
+          <g id="candlesMasterGroup">
+            <!-- Candle 1 -->
+            <g transform="translate(274, 122)">
+              <rect x="-3.5" y="-36" width="7" height="36" rx="2" fill="#fbe2e5" stroke="#4a3531" stroke-width="1.2"/>
+              <path d="M-3.5,-26 L3.5,-20 M-3.5,-14 L3.5,-8" stroke="#d98a8c" stroke-width="1.5"/>
+              <line x1="0" y1="-36" x2="0" y2="-41" stroke="#4a3531" stroke-width="1.2"/>
+              <path class="smoke-path" d="M0,-42 C-5,-52 6,-60 -2,-72" fill="none" stroke="#9e9289" stroke-width="1.5" stroke-linecap="round"/>
+              <g class="flame-group" transform="translate(0, -41)">
+                <circle cx="0" cy="-6" r="11" fill="url(#flameGlow)" class="flame-halo"/>
+                <path d="M0,-16 C4,-10 5,-3 0,0 C-5,-3 -4,-10 0,-16 Z" fill="#ffcf5c" stroke="#4a3531" stroke-width="0.9"/>
+                <path d="M0,-10 C2,-6 2,-2 0,0 C-2,-2 -2,-6 0,-10 Z" fill="#fff7d6"/>
+              </g>
+            </g>
+
+            <!-- Candle 2 -->
+            <g transform="translate(304, 118)">
+              <rect x="-3.5" y="-40" width="7" height="40" rx="2" fill="#fff8eb" stroke="#4a3531" stroke-width="1.2"/>
+              <path d="M-3.5,-30 L3.5,-24 M-3.5,-16 L3.5,-10" stroke="#e0b973" stroke-width="1.5"/>
+              <line x1="0" y1="-40" x2="0" y2="-45" stroke="#4a3531" stroke-width="1.2"/>
+              <path class="smoke-path" d="M0,-46 C4,-56 -6,-64 2,-76" fill="none" stroke="#9e9289" stroke-width="1.5" stroke-linecap="round"/>
+              <g class="flame-group" transform="translate(0, -45)">
+                <circle cx="0" cy="-6" r="11" fill="url(#flameGlow)" class="flame-halo"/>
+                <path d="M0,-16 C4,-10 5,-3 0,0 C-5,-3 -4,-10 0,-16 Z" fill="#ffcf5c" stroke="#4a3531" stroke-width="0.9"/>
+                <path d="M0,-10 C2,-6 2,-2 0,0 C-2,-2 -2,-6 0,-10 Z" fill="#fff7d6"/>
+              </g>
+            </g>
+
+            <!-- Candle 3 -->
+            <g transform="translate(356, 118)">
+              <rect x="-3.5" y="-40" width="7" height="40" rx="2" fill="#fbe2e5" stroke="#4a3531" stroke-width="1.2"/>
+              <path d="M-3.5,-30 L3.5,-24 M-3.5,-16 L3.5,-10" stroke="#d98a8c" stroke-width="1.5"/>
+              <line x1="0" y1="-40" x2="0" y2="-45" stroke="#4a3531" stroke-width="1.2"/>
+              <path class="smoke-path" d="M0,-46 C-4,-55 5,-64 -1,-76" fill="none" stroke="#9e9289" stroke-width="1.5" stroke-linecap="round"/>
+              <g class="flame-group" transform="translate(0, -45)">
+                <circle cx="0" cy="-6" r="11" fill="url(#flameGlow)" class="flame-halo"/>
+                <path d="M0,-16 C4,-10 5,-3 0,0 C-5,-3 -4,-10 0,-16 Z" fill="#ffcf5c" stroke="#4a3531" stroke-width="0.9"/>
+                <path d="M0,-10 C2,-6 2,-2 0,0 C-2,-2 -2,-6 0,-10 Z" fill="#fff7d6"/>
+              </g>
+            </g>
+
+            <!-- Candle 4 -->
+            <g transform="translate(386, 122)">
+              <rect x="-3.5" y="-36" width="7" height="36" rx="2" fill="#fff8eb" stroke="#4a3531" stroke-width="1.2"/>
+              <path d="M-3.5,-26 L3.5,-20 M-3.5,-14 L3.5,-8" stroke="#e0b973" stroke-width="1.5"/>
+              <line x1="0" y1="-36" x2="0" y2="-41" stroke="#4a3531" stroke-width="1.2"/>
+              <path class="smoke-path" d="M0,-42 C5,-52 -4,-60 3,-72" fill="none" stroke="#9e9289" stroke-width="1.5" stroke-linecap="round"/>
+              <g class="flame-group" transform="translate(0, -41)">
+                <circle cx="0" cy="-6" r="11" fill="url(#flameGlow)" class="flame-halo"/>
+                <path d="M0,-16 C4,-10 5,-3 0,0 C-5,-3 -4,-10 0,-16 Z" fill="#ffcf5c" stroke="#4a3531" stroke-width="0.9"/>
+                <path d="M0,-10 C2,-6 2,-2 0,0 C-2,-2 -2,-6 0,-10 Z" fill="#fff7d6"/>
+              </g>
+            </g>
+          </g>
+
+          <!-- ================================================= -->
+          <!-- KNIFE CUT SPARKLE TRACE OVERLAY (Bottom Tier Only)-->
+          <!-- ================================================= -->
+          <g id="knifeCutOverlay">
+            <path class="knife-line" d="M382,305 L352,321 L352,423" fill="none" stroke="#fff3c4" stroke-width="3.2" stroke-linecap="round"/>
+            <path class="knife-line" d="M382,305 L458,312 L458,413" fill="none" stroke="#fff3c4" stroke-width="3.2" stroke-linecap="round"/>
+          </g>
+        </g>
+
+        <!-- ===================================================== -->
+        <!-- 4. DETACHED BOTTOM-TIER WEDGE SLICE                   -->
+        <!-- Slides directly out of the bottom-tier cavity         -->
+        <!-- ===================================================== -->
+        <g id="plateAndSliceGroup" filter="url(#watercolorPaper)">
+
+          <!-- Hand-Crafted Porcelain Dessert Plate -->
+          <g id="sidePlateBase">
+            <!-- Outer ceramic foot & rim shadow -->
+            <ellipse cx="655" cy="496" rx="118" ry="23" fill="#d9beb6" stroke="#4a3531" stroke-width="1.6"/>
+            <!-- Porcelain scalloped plate rim -->
+            <ellipse cx="655" cy="491" rx="114" ry="21" fill="#fdf8f4" stroke="#4a3531" stroke-width="1.4"/>
+            <!-- Delicate gold-leaf inner rim line -->
+            <ellipse cx="655" cy="491" rx="105" ry="18.8" fill="none" stroke="#d4a857" stroke-width="0.9" stroke-dasharray="6 2" opacity="0.7"/>
+            <!-- Recessed plate well -->
+            <ellipse cx="655" cy="492" rx="88" ry="14.5" fill="#f5e6e0" stroke="#9e7f76" stroke-width="0.9"/>
+            <!-- Glossy porcelain rim highlight -->
+            <path d="M562,485 C590,476 635,474 685,476" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" opacity="0.75"/>
+
+            <!-- Remaining Sweet Crumbs, Glossy Jam Smear & Leftover Stem when Slice is Bitten/Eaten -->
+            <g id="plateCrumbsGroup" opacity="0">
+              <!-- Realistic glossy berry compote smear on the porcelain well -->
+              <path d="M604,492 C614,489 628,490 634,494 C626,497 612,496 604,492 Z" fill="#b83543" opacity="0.65"/>
+              <path d="M608,492 C615,490 623,491 627,493" fill="none" stroke="#ffdce0" stroke-width="1" stroke-linecap="round" opacity="0.8"/>
+              <!-- Multi-toned moist sponge crumbs & toasted crust flakes -->
+              <path d="M582,489 L586,487 L588,490 L584,492 Z" fill="#d9a15b" stroke="#4a3531" stroke-width="0.7"/>
+              <circle cx="592" cy="493" r="2.2" fill="#f3cfa0" stroke="#4a3531" stroke-width="0.6"/>
+              <circle cx="596" cy="488" r="1.4" fill="#b87b38"/>
+              <path d="M638,487 L643,485 L645,489 L640,491 Z" fill="#ebd0a8" stroke="#4a3531" stroke-width="0.7"/>
+              <circle cx="649" cy="494" r="2.1" fill="#c94a58"/>
+              <circle cx="658" cy="488" r="2.8" fill="#e6b87a" stroke="#4a3531" stroke-width="0.7"/>
+              <circle cx="663" cy="492" r="1.5" fill="#fff5e6"/>
+              <circle cx="619" cy="486" r="1.9" fill="#d9a15b"/>
+              <circle cx="674" cy="493" r="2.3" fill="#f2b8be" stroke="#4a3531" stroke-width="0.6"/>
+              <!-- Leftover piped cream pearl & tiny berry leaf on plate -->
+              <circle cx="668" cy="486" r="3.4" fill="url(#pearl3DGrad)" stroke="#4a3531" stroke-width="0.8"/>
+              <path d="M626,495 C629,491 634,491 636,494 C632,496 628,496 626,495 Z" fill="#6d8c54" stroke="#4a3531" stroke-width="0.7"/>
+            </g>
+
+            <!-- Vintage Sculpted Silver Dessert Fork Resting on Plate Edge -->
+            <g id="dessertForkGroup" transform="translate(702, 500) rotate(-13)">
+              <!-- Soft cast shadow under fork -->
+              <path d="M-20,5 L74,-4 C78,-4 80,0 74,2 L-18,9 Z" fill="#593e34" opacity="0.22"/>
+              <!-- Fork Neck, Bolster & Ornate Handle -->
+              <path d="M0,-1.5 L22,-2.2 C30,-2.5 52,-6.5 72,-7 C77,-7 79,-1 73,0.5 C52,1 30,-0.2 22,0.5 L0,3.5 Z"
+                    fill="url(#silverForkGrad)" stroke="#4a3531" stroke-width="1.15" stroke-linejoin="round"/>
+              <!-- Handle vintage engraved ridge -->
+              <path d="M28,-1.5 L71,-4.2" fill="none" stroke="#8c7f70" stroke-width="0.75" opacity="0.75"/>
+              <!-- Fork Head & 4 Sculpted Tines -->
+              <path d="M2,-4.5 L-17,-3.2 L-17,-1.6 L-3,-2.2 L-3,-0.4 L-18,1.0 L-18,2.6 L-3,1.6 L-3,3.4 L-17,4.8 L-17,6.4 L2,5.5 Z"
+                    fill="url(#silverForkGrad)" stroke="#4a3531" stroke-width="1.05" stroke-linejoin="round"/>
+              <!-- Tiny Cake Crumb & Berry Jam Tint on Fork Tines (Appears after first bite!) -->
+              <g id="forkBiteCrumbGroup" opacity="0">
+                <path d="M-18,-2.8 C-14,-3.5 -10,-1.5 -11,2.5 C-14,3.5 -18,2 -18,-2.8 Z" fill="#c94a58" opacity="0.75"/>
+                <circle cx="-13" cy="0.5" r="2.2" fill="#f5d7a8" stroke="#4a3531" stroke-width="0.65"/>
+                <circle cx="-15" cy="-1.5" r="1.2" fill="#fffaf0"/>
+              </g>
+            </g>
+          </g>
+
+          <!-- =============================================================== -->
+          <!-- THE ULTRA-REALISTIC 3D BOTTOM-TIER CAKE SLICE                   -->
+          <!-- True 3/4 perspective:                                           -->
+          <!--   Left Inner Tip: (548,405..484)                                -->
+          <!--   Front-Center Cut Corner (closest to camera): (688,382..495)   -->
+          <!--   Back-Left Top Rim Corner: (658,356)                           -->
+          <!--   Far-Right Curved Outer Back Rim: (730,370..474)               -->
+          <!-- =============================================================== -->
+          <g id="travelingSliceGroup">
+
+            <!-- Multi-Layered Ambient Occlusion & Contact Shadow on Plate -->
+            <g id="slicePlateShadows">
+              <ellipse cx="646" cy="490" rx="92" ry="12" fill="url(#sliceContactShadow)"/>
+              <path d="M546,485 L688,497 C710,492 725,484 732,475 L655,468 Z" fill="#4a2c21" opacity="0.28"/>
+            </g>
+
+            <!-- MAIN CLIPPED SLICE BODY (Clipped progressively across 3 bite stages) -->
+            <g id="sliceClippedContent" clip-path="url(#sliceBiteClip-0)">
+
+              <!-- =========================================================== -->
+              <!-- A. TOP FROSTED WEDGE SURFACE (3D Perspective Sector)        -->
+              <!-- Bounded by Tip(548,405) -> BackRim(658,356) ->              -->
+              <!-- CurvedOuterArc(715,362..730,370) -> FrontCorner(688,382)    -->
+              <!-- =========================================================== -->
+              <path id="sliceTopWedge"
+                    d="M548,405 L658,356 C694,356 722,362 730,370 C724,376 708,380 688,382 Z"
+                    fill="#fae7e9" stroke="#4a3531" stroke-width="1.5" stroke-linejoin="round"/>
+              <!-- Subtle palette-knife buttercream swirl strokes on top surface -->
+              <path d="M568,400 Q625,375 676,366" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" opacity="0.65"/>
+              <path d="M590,398 Q645,378 696,373" fill="none" stroke="#d9a3ab" stroke-width="1.3" stroke-linecap="round" opacity="0.45"/>
+
+              <!-- =========================================================== -->
+              <!-- B. CURVED CYLINDRICAL OUTER FROSTED WALL (X: 688 -> 730)    -->
+              <!-- Wraps around the back-right of the wedge with 3D shading    -->
+              <!-- =========================================================== -->
+              <path id="sliceBackFrosting"
+                    d="M688,382 C708,380 724,376 730,370 L730,474 C724,483 708,491 688,495 Z"
+                    fill="#f5cfd4" stroke="#4a3531" stroke-width="1.5" stroke-linejoin="round"/>
+              <!-- Cylindrical 3D light-and-shadow wrap overlay -->
+              <path d="M688,382 C708,380 724,376 730,370 L730,474 C724,483 708,491 688,495 Z"
+                    fill="url(#sliceCurvedWallLight)" stroke="none"/>
+
+              <!-- Piped Top Border Shells along the Back-Right Curved Crest -->
+              <g id="sliceTopRimPearls" stroke="#4a3531" stroke-width="1.1" fill="url(#pearl3DGrad)">
+                <ellipse cx="664" cy="356" rx="5.5" ry="3.8" transform="rotate(6 664 356)"/>
+                <ellipse cx="677" cy="357" rx="5.8" ry="4.0" transform="rotate(8 677 357)"/>
+                <ellipse cx="691" cy="359" rx="6.0" ry="4.2" transform="rotate(10 691 359)"/>
+                <ellipse cx="705" cy="362" rx="6.0" ry="4.2" transform="rotate(14 705 362)"/>
+                <ellipse cx="718" cy="366" rx="5.8" ry="4.2" transform="rotate(18 718 366)"/>
+                <ellipse cx="727" cy="371" rx="5.2" ry="4.0" transform="rotate(24 727 371)"/>
+              </g>
+
+              <!-- =========================================================== -->
+              <!-- C. CUT INTERIOR WALL: 3 PILLOWY SPONGE LAYERS & 2 FILLINGS  -->
+              <!-- Spans from Left Tip (X=548) to Outer Frosting Rind (X=682)  -->
+              <!-- =========================================================== -->
+
+              <!-- SPONGE LAYER 1 (Top Sponge: 548,411..431 -> 682,389..418) -->
+              <path id="sliceSponge1"
+                    d="M548,411 L682,389 L682,418 C648,422 592,428 548,431 Z"
+                    fill="#fae7c8" stroke="none"/>
+              <path d="M548,411 L682,389 L682,418 C648,422 592,428 548,431 Z"
+                    fill="url(#spongeBakedDepth)" stroke="none"/>
+              <!-- Caramelized golden-brown baked top/side crust line on Sponge 1 -->
+              <path d="M548,411 L682,389 L682,418" fill="none" stroke="#b87e42" stroke-width="1.3" opacity="0.75"/>
+
+              <!-- SPONGE LAYER 2 (Middle Flavor Sponge: 548,439..458 -> 682,429.5..457) -->
+              <path id="sliceSponge2"
+                    d="M548,439 C592,436 648,432 682,429.5 L682,457 C648,459 592,458.5 548,458 Z"
+                    fill="#f3c5cc" stroke="none"/>
+              <path d="M548,439 C592,436 648,432 682,429.5 L682,457 C648,459 592,458.5 548,458 Z"
+                    fill="url(#spongeBakedDepth)" stroke="none"/>
+              <path d="M682,429.5 L682,457" fill="none" stroke="#b87e42" stroke-width="1.3" opacity="0.7"/>
+
+              <!-- SPONGE LAYER 3 (Bottom Sponge: 548,466..484 -> 682,468.5..495) -->
+              <path id="sliceSponge3"
+                    d="M548,466 C592,467 648,468 682,468.5 L682,495 C638,491.5 588,487.5 548,484 Z"
+                    fill="#fae7c8" stroke="none"/>
+              <path d="M548,466 C592,467 648,468 682,468.5 L682,495 C638,491.5 588,487.5 548,484 Z"
+                    fill="url(#spongeBakedDepth)" stroke="none"/>
+              <!-- Golden baked bottom crust resting on plate -->
+              <path d="M548,484 C588,487.5 638,491.5 682,495 L682,468.5" fill="none" stroke="#a66c33" stroke-width="1.5" opacity="0.85"/>
+
+              <!-- =========================================================== -->
+              <!-- ULTRA-REALISTIC MULTI-TONE SPONGE CRUMB TEXTURE (70+ PORES) -->
+              <!-- Deep amber air-pockets, golden-tan stipples & ivory crumbs  -->
+              <!-- =========================================================== -->
+              <g id="realisticSpongeCrumbPores">
+                <!-- Deep Amber Air Pockets (Cut Sponge Cells) -->
+                <g fill="#9c6631" opacity="0.58">
+                  <!-- Layer 1 pores -->
+                  <ellipse cx="562" cy="419" rx="1.4" ry="0.9" transform="rotate(-8 562 419)"/>
+                  <circle cx="576" cy="416" r="1.1"/><circle cx="585" cy="422" r="1.4"/>
+                  <ellipse cx="601" cy="413" rx="1.7" ry="1.0" transform="rotate(-10 601 413)"/>
+                  <circle cx="614" cy="419" r="1.2"/><circle cx="626" cy="409" r="1.5"/>
+                  <ellipse cx="639" cy="414" rx="1.6" ry="1.1"/><circle cx="651" cy="404" r="1.3"/>
+                  <circle cx="664" cy="411" r="1.6"/><ellipse cx="675" cy="401" rx="1.5" ry="1.0"/>
+                  <circle cx="673" cy="413" r="1.2"/><circle cx="592" cy="415" r="0.9"/>
+                  <circle cx="645" cy="406" r="1.0"/><circle cx="619" cy="411" r="1.1"/>
+                  <!-- Layer 2 pores -->
+                  <circle cx="560" cy="447" r="1.2"/><ellipse cx="574" cy="444" rx="1.5" ry="1.0"/>
+                  <circle cx="588" cy="451" r="1.3"/><circle cx="603" cy="443" r="1.4"/>
+                  <ellipse cx="617" cy="449" rx="1.6" ry="1.0"/><circle cx="631" cy="441" r="1.2"/>
+                  <circle cx="644" cy="448" r="1.5"/><ellipse cx="658" cy="439" rx="1.7" ry="1.1"/>
+                  <circle cx="669" cy="449" r="1.3"/><circle cx="676" cy="438" r="1.4"/>
+                  <circle cx="595" cy="446" r="1.0"/><circle cx="636" cy="452" r="1.1"/>
+                  <!-- Layer 3 pores -->
+                  <circle cx="559" cy="474" r="1.2"/><ellipse cx="573" cy="478" rx="1.5" ry="1.0"/>
+                  <circle cx="587" cy="472" r="1.4"/><circle cx="601" cy="480" r="1.3"/>
+                  <ellipse cx="616" cy="474" rx="1.7" ry="1.0"/><circle cx="629" cy="483" r="1.5"/>
+                  <circle cx="643" cy="476" r="1.3"/><ellipse cx="657" cy="485" rx="1.6" ry="1.1"/>
+                  <circle cx="668" cy="477" r="1.4"/><circle cx="675" cy="488" r="1.5"/>
+                  <circle cx="610" cy="483" r="1.1"/><circle cx="649" cy="481" r="1.0"/>
+                </g>
+
+                <!-- Soft Golden-Tan Crumb Stipples -->
+                <g fill="#c99559" opacity="0.65">
+                  <circle cx="555" cy="424" r="1.1"/><circle cx="569" cy="421" r="1.3"/><circle cx="581" cy="418" r="1.0"/>
+                  <circle cx="596" cy="421" r="1.2"/><circle cx="608" cy="416" r="1.4"/><circle cx="622" cy="417" r="1.1"/>
+                  <circle cx="633" cy="412" r="1.3"/><circle cx="647" cy="415" r="1.2"/><circle cx="659" cy="408" r="1.4"/>
+                  <circle cx="669" cy="405" r="1.1"/><circle cx="678" cy="408" r="1.3"/>
+                  <circle cx="566" cy="451" r="1.2"/><circle cx="580" cy="447" r="1.1"/><circle cx="594" cy="453" r="1.3"/>
+                  <circle cx="609" cy="448" r="1.2"/><circle cx="624" cy="445" r="1.4"/><circle cx="638" cy="443" r="1.1"/>
+                  <circle cx="652" cy="446" r="1.3"/><circle cx="663" cy="443" r="1.2"/><circle cx="674" cy="451" r="1.4"/>
+                  <circle cx="565" cy="479" r="1.2"/><circle cx="579" cy="475" r="1.3"/><circle cx="593" cy="481" r="1.1"/>
+                  <circle cx="607" cy="476" r="1.4"/><circle cx="622" cy="479" r="1.2"/><circle cx="636" cy="481" r="1.3"/>
+                  <circle cx="651" cy="475" r="1.1"/><circle cx="662" cy="482" r="1.4"/><circle cx="672" cy="483" r="1.2"/>
+                </g>
+
+                <!-- Fluffy Ivory Crumb Highlights (Gives soft, pillowy cake texture) -->
+                <g fill="#fffdf7" opacity="0.75">
+                  <circle cx="564" cy="417" r="1.1"/><circle cx="589" cy="419" r="1.2"/><circle cx="612" cy="415" r="1.3"/>
+                  <circle cx="635" cy="409" r="1.2"/><circle cx="656" cy="411" r="1.4"/><circle cx="671" cy="407" r="1.2"/>
+                  <circle cx="571" cy="446" r="1.1"/><circle cx="599" cy="449" r="1.3"/><circle cx="621" cy="443" r="1.2"/>
+                  <circle cx="648" cy="444" r="1.3"/><circle cx="666" cy="446" r="1.2"/>
+                  <circle cx="568" cy="473" r="1.2"/><circle cx="596" cy="477" r="1.3"/><circle cx="625" cy="475" r="1.2"/>
+                  <circle cx="645" cy="483" r="1.3"/><circle cx="665" cy="479" r="1.2"/>
+                </g>
+              </g>
+
+              <!-- =========================================================== -->
+              <!-- D. DOUBLE-LAYERED FILLINGS (WHIPPED CREAM DAM + BERRY JAM)  -->
+              <!-- Includes plump piped dam bulbs at X=679 & glossy jam drips  -->
+              <!-- =========================================================== -->
+
+              <!-- FILLING 1 (Between Sponge 1 & Sponge 2) -->
+              <!-- Whipped Vanilla Buttercream Sub-Layer 1 -->
+              <path id="sliceCreamLayer1"
+                    d="M548,430.5 C592,427.5 646,421.5 682,417.5 L682,423 C646,426.5 592,431.5 548,434.5 Z"
+                    fill="#fffdf8" stroke="#4a3531" stroke-width="0.8"/>
+              <!-- Piped Buttercream Dam Bulb 1 at outer crust edge -->
+              <ellipse id="sliceCreamDam1" cx="679" cy="422.5" rx="4.2" ry="5.2" fill="#fffdf8" stroke="#4a3531" stroke-width="0.9"/>
+              <!-- Glossy Ruby Berry Compote / Jam Ribbon 1 with organic wavy drips -->
+              <path id="sliceFilling1"
+                    d="M548,434 C575,432 605,430 635,427 C655,425 670,423 678,422.5 L679,430 C671,431 664,434 659,431.5 C648,432 639,436.5 632,433 C615,434.5 598,439 589,435.5 C574,437 560,438.5 548,439.5 Z"
+                    fill="#c94a58" stroke="#4a3531" stroke-width="1.1" stroke-linejoin="round"/>
+              <path d="M548,434 C575,432 605,430 635,427 C655,425 670,423 678,422.5 L679,430 C671,431 664,434 659,431.5 C648,432 639,436.5 632,433 C615,434.5 598,439 589,435.5 C574,437 560,438.5 548,439.5 Z"
+                    fill="url(#jamGlossOverlay)" stroke="none"/>
+              <!-- Jam 1 Specular Wet Shine & Berry Seeds -->
+              <path d="M562,435.5 Q602,432.5 642,428.5" fill="none" stroke="#ffdce2" stroke-width="1.5" stroke-linecap="round" opacity="0.88"/>
+              <path d="M652,427.5 Q665,426 674,425.5" fill="none" stroke="#ffffff" stroke-width="1.3" stroke-linecap="round" opacity="0.9"/>
+              <circle cx="582" cy="435" r="0.65" fill="#fce4b8"/><circle cx="618" cy="431.5" r="0.65" fill="#fce4b8"/>
+              <circle cx="645" cy="429.5" r="0.7" fill="#fce4b8"/><circle cx="666" cy="427" r="0.65" fill="#fce4b8"/>
+
+              <!-- FILLING 2 (Between Sponge 2 & Sponge 3) -->
+              <!-- Whipped Vanilla Buttercream Sub-Layer 2 -->
+              <path id="sliceCreamLayer2"
+                    d="M548,457.5 C592,458 646,458.5 682,456.5 L682,462 C646,463.5 592,462.5 548,461.5 Z"
+                    fill="#fffdf8" stroke="#4a3531" stroke-width="0.8"/>
+              <!-- Piped Buttercream Dam Bulb 2 at outer crust edge -->
+              <ellipse id="sliceCreamDam2" cx="679" cy="462" rx="4.2" ry="5.2" fill="#fffdf8" stroke="#4a3531" stroke-width="0.9"/>
+              <!-- Glossy Ruby Berry Compote / Jam Ribbon 2 with organic wavy drips -->
+              <path id="sliceFilling2"
+                    d="M548,461 C582,461.5 622,462 678,461.5 L679,469 C668,469.5 659,472.5 652,469.5 C636,469.5 625,473 616,469 C596,468.5 582,471.5 573,468 C562,467.5 554,467 548,466.5 Z"
+                    fill="#a83542" stroke="#4a3531" stroke-width="1.1" stroke-linejoin="round"/>
+              <path d="M548,461 C582,461.5 622,462 678,461.5 L679,469 C668,469.5 659,472.5 652,469.5 C636,469.5 625,473 616,469 C596,468.5 582,471.5 573,468 C562,467.5 554,467 548,466.5 Z"
+                    fill="url(#jamGlossOverlay)" stroke="none"/>
+              <!-- Jam 2 Specular Wet Shine & Berry Seeds -->
+              <path d="M565,463.5 Q608,464.5 648,464.5" fill="none" stroke="#ffdce2" stroke-width="1.5" stroke-linecap="round" opacity="0.85"/>
+              <path d="M656,464.5 Q667,464.5 674,464" fill="none" stroke="#ffffff" stroke-width="1.3" stroke-linecap="round" opacity="0.9"/>
+              <circle cx="578" cy="464.5" r="0.65" fill="#fce4b8"/><circle cx="612" cy="465.5" r="0.7" fill="#fce4b8"/>
+              <circle cx="639" cy="466" r="0.65" fill="#fce4b8"/><circle cx="664" cy="466" r="0.65" fill="#fce4b8"/>
+
+              <!-- =========================================================== -->
+              <!-- E. SLICED L-SHAPED OUTER & TOP BUTTERCREAM FROSTING RIND    -->
+              <!-- Shows the 6px-thick frosting cross-section cut by the knife -->
+              <!-- =========================================================== -->
+              <path id="sliceFrostingRind"
+                    d="M548,405 L688,382 L688,495 L681.5,495 L681.5,389.5 L548,411.5 Z"
+                    fill="#fff9f5" stroke="#4a3531" stroke-width="1.4" stroke-linejoin="round"/>
+              <!-- Inner bevel highlight along the cut frosting rind -->
+              <path d="M550,407.5 L685,385 L685,493" fill="none" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" opacity="0.9"/>
+              <!-- Crisp outer silhouette outline of the cut wedge tip -->
+              <path d="M548,405 L548,484 L682,495" fill="none" stroke="#4a3531" stroke-width="1.45" stroke-linejoin="round"/>
+
+              <!-- =========================================================== -->
+              <!-- F. 3D PIPED BUTTERCREAM BASE PEARLS (Along Curved Crust)    -->
+              <!-- Includes the front-most pearl sliced in half at X=688!      -->
+              <!-- =========================================================== -->
+              <g id="sliceBasePearlsGroup" stroke="#4a3531" stroke-width="1.15">
+                <ellipse cx="728" cy="475" rx="6.0" ry="5.0" transform="rotate(-18 728 475)" fill="url(#pearl3DGrad)"/>
+                <ellipse cx="720" cy="481" rx="6.4" ry="5.2" transform="rotate(-16 720 481)" fill="url(#pearl3DGrad)"/>
+                <ellipse cx="710" cy="486" rx="6.6" ry="5.5" transform="rotate(-14 710 486)" fill="url(#pearl3DGrad)"/>
+                <ellipse cx="699" cy="491" rx="6.8" ry="5.6" transform="rotate(-10 699 491)" fill="url(#pearl3DGrad)"/>
+                <!-- Sliced Front Pearl Cross-Section right at the knife cut plane (X=688) -->
+                <path d="M686,488 C693,487 696,492 693,497 C690,499 686,498 685,495 Z" fill="#fffaf5"/>
+                <ellipse cx="686.5" cy="493" rx="3.2" ry="5.2" fill="#fffdf9"/>
+              </g>
+
+              <!-- =========================================================== -->
+              <!-- G. THEME-SPECIFIC 3D OUTER RUFFLES & TOPPINGS ON THE SLICE  -->
+              <!-- =========================================================== -->
+
+              <!-- 1. COQUETTE RUFFLES & BOWS GARNISH (Default) -->
+              <g id="sliceGarnishCoquette">
+                <!-- Pleated Lambeth Double Ruffle Swags wrapping the curved outer wall (X: 688..730) -->
+                <path d="M687,420 Q709,436 731,404" fill="none" stroke="#4a3531" stroke-width="8.5" stroke-linecap="round"/>
+                <path d="M687,420 Q709,436 731,404" fill="none" stroke="#fff9f5" stroke-width="6.5" stroke-linecap="round"/>
+                <path d="M687,429 Q709,445 731,413" fill="none" stroke="#4a3531" stroke-width="7" stroke-linecap="round"/>
+                <path d="M687,429 Q709,445 731,413" fill="none" stroke="#f4c5cb" stroke-width="5" stroke-linecap="round"/>
+                <!-- Sliced Ruffle Cross-Section at X=687 where the knife cut through the piping -->
+                <ellipse cx="686.5" cy="420" rx="3.2" ry="4.5" fill="#fffdf9" stroke="#4a3531" stroke-width="1.1"/>
+                <ellipse cx="686.5" cy="429" rx="2.8" ry="3.8" fill="#fae0e3" stroke="#4a3531" stroke-width="1.1"/>
+
+                <!-- Piped Whipped Cream Rosette on Top Surface of Wedge -->
+                <g transform="translate(664, 372)">
+                  <ellipse cx="0" cy="4" rx="18" ry="7.5" fill="#4a3531" opacity="0.16"/>
+                  <path d="M-15,2 C-17,-4 -10,-9 -4,-7 C0,-12 9,-11 12,-5 C18,-4 17,4 11,6 C6,9 -8,9 -15,2 Z"
+                        fill="url(#pearl3DGrad)" stroke="#4a3531" stroke-width="1.2"/>
+                  <path d="M-9,0 C-5,-5 4,-5 8,0" fill="none" stroke="#4a3531" stroke-width="0.9" opacity="0.65"/>
+
+                  <!-- Plump 3D Whole Strawberry + Juicy Sliced Strawberry Half on Top -->
+                  <g transform="translate(-3, -7) rotate(14) scale(1.22)">
+                    <use href="#strawberryMotif" x="0" y="0"/>
+                    <!-- Glossy white wet specular highlight on strawberry -->
+                    <path d="M-3,-5 C-1,-6 2,-4 2,1" fill="none" stroke="#ffffff" stroke-width="1.3" stroke-linecap="round" opacity="0.85"/>
+                  </g>
+                  <!-- Fresh Sliced Strawberry Half leaning against the rosette -->
+                  <g transform="translate(10, -2) rotate(-18)">
+                    <path d="M0,-8 C6,-8 8,-2 6,4 C4,8 2,10 0,10 C-2,10 -4,8 -6,4 C-8,-2 -6,-8 0,-8 Z"
+                          fill="#df4842" stroke="#4a3531" stroke-width="1.15"/>
+                    <path d="M0,-5.5 C4,-5.5 5.2,-1 4,3 C2.5,6 1,7.5 0,7.5 C-1,7.5 -2.5,6 -4,3 C-5.2,-1 -4,-5.5 0,-5.5 Z"
+                          fill="#fbd2d0" stroke="none"/>
+                    <ellipse cx="0" cy="1" rx="1.6" ry="3.8" fill="#fff9f7"/>
+                  </g>
+                </g>
+              </g>
+
+              <!-- 2. GARDEN PARTY & BLOOMS GARNISH -->
+              <g id="sliceGarnishGarden" class="hidden">
+                <!-- Botanical Vine & Pressed Blossoms on Curved Outer Wall -->
+                <path d="M688,448 Q710,425 728,396" fill="none" stroke="#5b7049" stroke-width="1.8" stroke-linecap="round"/>
+                <ellipse cx="704" cy="432" rx="8" ry="4" transform="rotate(-32 704 432)" fill="#8fa67e" stroke="#4a3531" stroke-width="1.1"/>
+                <ellipse cx="720" cy="410" rx="7.5" ry="3.8" transform="rotate(-38 720 410)" fill="#8fa67e" stroke="#4a3531" stroke-width="1.1"/>
+                <use href="#gardenBlossom" x="712" y="424" transform="scale(0.88)" style="transform-box: fill-box; transform-origin: center;"/>
+
+                <!-- 3D Layered Garden Rose & Sage Leaves on Top Surface -->
+                <g transform="translate(664, 370)">
+                  <ellipse cx="0" cy="5" rx="19" ry="7" fill="#4a3531" opacity="0.16"/>
+                  <ellipse cx="-13" cy="1" rx="10" ry="4.8" transform="rotate(-18 -13 1)" fill="#7d966c" stroke="#4a3531" stroke-width="1.15"/>
+                  <ellipse cx="13" cy="2" rx="10" ry="4.8" transform="rotate(22 13 2)" fill="#8fa67e" stroke="#4a3531" stroke-width="1.15"/>
+                  <use href="#gardenBlossom" x="0" y="-3" transform="scale(1.3)" style="transform-box: fill-box; transform-origin: center;"/>
+                  <circle cx="-6" cy="-8" r="2.2" fill="#f7e39c" stroke="#4a3531" stroke-width="0.9"/>
+                  <circle cx="8" cy="-7" r="1.8" fill="#f7e39c" stroke="#4a3531" stroke-width="0.9"/>
+                </g>
+              </g>
+
+              <!-- 3. CELESTIAL TWENTY-ONE GARNISH -->
+              <g id="sliceGarnishCelestial" class="hidden">
+                <!-- Golden Constellation & Crescent on Curved Outer Wall -->
+                <polyline points="692,438 710,418 726,426" fill="none" stroke="#f3d285" stroke-width="1.3" stroke-dasharray="2 2"/>
+                <circle cx="692" cy="438" r="2.4" fill="#fff3c4"/>
+                <circle cx="726" cy="426" r="2.4" fill="#fff3c4"/>
+                <use href="#goldStarMotif" x="710" y="418" transform="scale(0.88)" style="transform-box: fill-box; transform-origin: center;"/>
+
+                <!-- 3D Lavender-Gold French Macaron & Spun-Sugar Moon Topper -->
+                <g transform="translate(664, 369)">
+                  <ellipse cx="0" cy="6" rx="18" ry="7" fill="#2c1f4a" opacity="0.24"/>
+                  <!-- Piped cream cloud base -->
+                  <path d="M-14,3 C-16,-3 -8,-7 0,-6 C8,-7 16,-3 14,3 C10,7 -10,7 -14,3 Z" fill="#f2ecf9" stroke="#4a3531" stroke-width="1.15"/>
+                  <!-- Tilted 3D Lavender Macaron -->
+                  <g transform="translate(-2, -3) rotate(-14)">
+                    <ellipse cx="0" cy="2" rx="12" ry="5.5" fill="#9d8db7" stroke="#4a3531" stroke-width="1.1"/>
+                    <path d="M-12,0 C-8,3 8,3 12,0 L12,2.5 C8,5.5 -8,5.5 -12,2.5 Z" fill="#f5d587" stroke="#4a3531" stroke-width="0.9"/>
+                    <ellipse cx="0" cy="-2" rx="12" ry="5.5" fill="#c4b7d9" stroke="#4a3531" stroke-width="1.15"/>
+                    <path d="M-7,-4 C-3,-6 4,-6 7,-4" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" opacity="0.75"/>
+                  </g>
+                  <!-- Golden Crescent Moon Topper -->
+                  <path d="M4,-18 A10,10 0 1,0 16,-6 A7.5,7.5 0 1,1 4,-18 Z" fill="#f5d587" stroke="#4a3531" stroke-width="1.1"/>
+                </g>
+              </g>
+
+              <!-- 4. WARM CHAMPAGNE & BERRY GARNISH -->
+              <g id="sliceGarnishChampagne" class="hidden">
+                <!-- Vanilla Swag & Fresh Glazed Blueberries on Curved Outer Wall -->
+                <path d="M687,422 Q709,438 731,408" fill="none" stroke="#4a3531" stroke-width="7.5" stroke-linecap="round"/>
+                <path d="M687,422 Q709,438 731,408" fill="none" stroke="#fffaf0" stroke-width="5.5" stroke-linecap="round"/>
+                <ellipse cx="686.5" cy="422" rx="3" ry="4.2" fill="#fffdf9" stroke="#4a3531" stroke-width="1.1"/>
+                <use href="#goldStarMotif" x="712" y="432" transform="scale(0.9)" style="transform-box: fill-box; transform-origin: center;"/>
+
+                <!-- Top Chantilly Cream Rosette, Glazed Strawberry & Blueberries -->
+                <g transform="translate(664, 372)">
+                  <ellipse cx="0" cy="4" rx="18" ry="7.5" fill="#4a3531" opacity="0.16"/>
+                  <path d="M-14,2 C-16,-4 -9,-9 -3,-7 C1,-12 9,-11 12,-5 C17,-4 16,4 10,6 C5,9 -7,9 -14,2 Z"
+                        fill="url(#pearl3DGrad)" stroke="#4a3531" stroke-width="1.2"/>
+                  <g transform="translate(-3, -7) rotate(10) scale(1.18)">
+                    <use href="#strawberryMotif" x="0" y="0"/>
+                    <path d="M-3,-5 C-1,-6 2,-4 2,1" fill="none" stroke="#ffffff" stroke-width="1.3" stroke-linecap="round" opacity="0.85"/>
+                  </g>
+                  <!-- Plump 3D Blueberries with silvery bloom & specular shine -->
+                  <g stroke="#4a3531" stroke-width="1.1">
+                    <circle cx="10" cy="0" r="5.2" fill="#5b5294"/>
+                    <circle cx="8.5" cy="-1.5" r="1.3" fill="#ffffff" stroke="none" opacity="0.8"/>
+                    <circle cx="-11" cy="2" r="4.6" fill="#6d64a8"/>
+                    <circle cx="-12.2" cy="0.8" r="1.1" fill="#ffffff" stroke="none" opacity="0.8"/>
+                  </g>
+                  <use href="#goldStarMotif" x="11" y="-11" transform="scale(0.78)" style="transform-box: fill-box; transform-origin: center;"/>
+                </g>
+              </g>
+            </g>
+
+            <!-- ============================================================= -->
+            <!-- H. 3D SCALLOPED BITE CROSS-SECTION WALLS (Bite Stages 1 & 2)  -->
+            <!-- Gives real 3D sponge & jam thickness right where the bite was -->
+            <!-- taken so the bitten slice never looks flat-clipped!           -->
+            <!-- ============================================================= -->
+
+            <!-- BITE STAGE 1 WALL (Visible when sliceBiteCount === 1, around X=594) -->
+            <g id="biteWallStage1" opacity="0" pointer-events="none">
+              <!-- 3D Bitten Top Frosting Bevel -->
+              <path d="M587,402 C591,400 595,399 598,399 L598,405 C594,405 590,406 587,408 Z" fill="#fffdf9" stroke="#4a3531" stroke-width="1.1"/>
+              <!-- 3D Bitten Sponge 1 Wall -->
+              <path id="bite1Sponge1" d="M588,407 L597,404 C600,412 599,420 596,427 L587,428 C590,420 591,413 588,407 Z" fill="#ebd2ab" stroke="#4a3531" stroke-width="1.1"/>
+              <!-- 3D Bitten Berry Jam 1 Ooze -->
+              <path id="bite1Jam1" d="M587,427 L597,425 L597,435 L587,436 Z" fill="#b33644" stroke="#4a3531" stroke-width="1"/>
+              <!-- 3D Bitten Sponge 2 Wall -->
+              <path id="bite1Sponge2" d="M588,435 L597,434 C600,442 599,451 595,458 L586,458 C590,451 591,442 588,435 Z" fill="#e2b0b8" stroke="#4a3531" stroke-width="1.1"/>
+              <!-- 3D Bitten Berry Jam 2 Ooze -->
+              <path id="bite1Jam2" d="M586,458 L596,457 L596,466 L586,466 Z" fill="#992936" stroke="#4a3531" stroke-width="1"/>
+              <!-- 3D Bitten Sponge 3 Wall -->
+              <path id="bite1Sponge3" d="M587,466 L596,465 C599,473 597,482 593,489 L585,487 C589,481 590,473 587,466 Z" fill="#ebd2ab" stroke="#4a3531" stroke-width="1.1"/>
+              <!-- Textured crumb pores on the fresh bite face -->
+              <circle cx="592" cy="415" r="1.2" fill="#a87238"/><circle cx="593" cy="446" r="1.3" fill="#a87238"/><circle cx="591" cy="476" r="1.2" fill="#a87238"/>
+            </g>
+
+            <!-- BITE STAGE 2 WALL (Visible when sliceBiteCount === 2, around X=642) -->
+            <g id="biteWallStage2" opacity="0" pointer-events="none">
+              <!-- 3D Bitten Top Frosting Bevel -->
+              <path d="M634,394 L645,390 L645,397 L634,401 Z" fill="#fffdf9" stroke="#4a3531" stroke-width="1.1"/>
+              <!-- 3D Bitten Sponge 1 Wall -->
+              <path id="bite2Sponge1" d="M635,400 L645,396 C649,405 648,415 644,423 L634,425 C638,416 639,407 635,400 Z" fill="#ebd2ab" stroke="#4a3531" stroke-width="1.1"/>
+              <!-- 3D Bitten Berry Jam 1 Ooze -->
+              <path id="bite2Jam1" d="M634,424 L645,421 L645,432 L634,434 Z" fill="#b33644" stroke="#4a3531" stroke-width="1"/>
+              <!-- 3D Bitten Sponge 2 Wall -->
+              <path id="bite2Sponge2" d="M635,433 L645,431 C649,441 648,450 643,458 L633,458 C638,450 639,441 635,433 Z" fill="#e2b0b8" stroke="#4a3531" stroke-width="1.1"/>
+              <!-- 3D Bitten Berry Jam 2 Ooze -->
+              <path id="bite2Jam2" d="M633,458 L644,457 L644,468 L633,468 Z" fill="#992936" stroke="#4a3531" stroke-width="1"/>
+              <!-- 3D Bitten Sponge 3 Wall -->
+              <path id="bite2Sponge3" d="M634,468 L644,467 C648,476 646,485 641,492 L631,490 C636,484 637,476 634,468 Z" fill="#ebd2ab" stroke="#4a3531" stroke-width="1.1"/>
+              <!-- Textured crumb pores on the fresh bite face -->
+              <circle cx="640" cy="410" r="1.3" fill="#a87238"/><circle cx="641" cy="444" r="1.4" fill="#a87238"/><circle cx="639" cy="479" r="1.3" fill="#a87238"/>
+            </g>
+          </g>
+        </g>
+      </svg>
+        </div>
+      </div>
+      <p id="candle-status" class="status-message" role="status" aria-live="polite">Your candles are waiting to be lit. 🕯️</p>
+      <div class="controls">
+        <button id="light-button" class="primary-button" type="button">🕯️ Light the candles</button>
+        <button id="blow-button" class="primary-button" type="button" hidden>💨🎤 Blow out the candles</button>
+        <button id="manual-blow-button" class="text-button" type="button" hidden>💨 Tap here to blow them out instead</button>
+      </div>
+      <a id="gift-surprise-link" class="gift-surprise-link" href="final-surprise.html" hidden aria-label="Open one last surprise">
+        <span class="gift-icon" aria-hidden="true">🎁</span>
+        <span>One last surprise</span>
+      </a>
+    </section>
+  </main>
+
+  <script src="cake.js"></script>
+</body>
+</html>

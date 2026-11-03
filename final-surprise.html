@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#fff6f7" />
+  <title>One Last Surprise 💝</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="final-surprise.css" />
+  <link rel="stylesheet" href="music-player.css" />
+  <script src="music-config.js" defer></script>
+  <script src="music-player.js" defer></script>
+</head>
+<body>
+  <a class="back-link" href="cake.html">← Back to the cake</a>
+
+  <main class="surprise-card">
+    <div class="bow" aria-hidden="true">🎀</div>
+    <div class="video-frame">
+      <video id="surprise-video" playsinline preload="metadata" aria-label="A little birthday memory">
+        <source src="media/final-surprise.mp4" type="video/mp4" />
+      </video>
+      <button id="center-play-button" class="center-play-button" type="button" aria-label="Play video">
+        <span aria-hidden="true">▶</span>
+      </button>
+    </div>
+
+    <div class="player-controls" aria-label="Video controls">
+      <button id="play-button" class="control-button play-control" type="button" aria-label="Play video">▶</button>
+      <label class="sr-only" for="video-seek">Seek through video</label>
+      <input id="video-seek" class="seek-slider" type="range" min="0" max="1000" value="0" />
+      <span id="video-time" class="video-time" aria-live="off">0:00 / 0:00</span>
+      <button id="mute-button" class="control-button" type="button" aria-label="Mute video">🔊</button>
+      <button id="fullscreen-button" class="control-button fullscreen-control" type="button" aria-label="Enter fullscreen">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3" />
+        </svg>
+      </button>
+    </div>
+
+    <p id="video-status" class="video-status" role="status" aria-live="polite" hidden></p>
+    <p class="memory-caption">✨ a little video for you ♡ ✨</p>
+  </main>
+
+  <script src="final-surprise.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Little Birthday Surprise 💌</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="music-player.css" />
+  <script src="music-config.js" defer></script>
+  <script src="music-player.js" defer></script>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 paper-texture">
+  <main class="relative w-full max-w-md rounded-3xl bg-[#FFFDF7] p-7 text-center sketch-border shadow-2xl sm:p-9">
+    <div class="washi-tape -top-3 left-1/2 -translate-x-1/2 rotate-2"></div>
+    <div class="mb-3 text-5xl" aria-hidden="true">💌</div>
+    <p class="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-[#9A7440]">A little birthday surprise</p>
+    <h1 class="mb-2 text-3xl font-bold text-[#3A2A29]">Password, please!</h1>
+    <p class="mb-5 text-sm font-semibold text-[#3A2A29]/80">What’s our nickname? 💕</p>
+
+    <form id="nickname-gate-form" class="space-y-3">
+      <label for="nickname-answer" class="sr-only">Our nickname</label>
+      <input id="nickname-answer" type="text" autocomplete="off" autocapitalize="none" required autofocus
+        class="w-full rounded-xl border-2 border-[#3A2A29] bg-white px-4 py-3 text-center font-bold text-[#3A2A29] outline-none focus:ring-4 focus:ring-[#DFB45A]/40"
+        placeholder="Type your answer..." />
+      <button type="submit" class="w-full rounded-xl bg-[#DFB45A] px-5 py-3 font-bold text-white sketch-border-sm transition hover:bg-[#d3a445]">
+        Unlock the surprise ✨
+      </button>
+    </form>
+
+    <p id="nickname-gate-feedback" class="mt-4 rounded-xl border-2 border-[#3A2A29] bg-[#FDE8B2] p-3 text-sm font-bold text-[#3A2A29]" role="status" aria-live="polite" hidden></p>
+  </main>
+
+  <script>
+    const nicknameGateForm = document.getElementById("nickname-gate-form");
+    const nicknameAnswer = document.getElementById("nickname-answer");
+    const nicknameFeedback = document.getElementById("nickname-gate-feedback");
+
+    function continueToBirthdayPage() {
+      if (window.navigateTo) {
+        window.navigateTo("birthday.html");
+      } else {
+        window.location.href = "birthday.html";
+      }
+    }
+
+    nicknameGateForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (nicknameAnswer.value.trim().toLowerCase() === "saftan") {
+        continueToBirthdayPage();
+        return;
+      }
+
+      nicknameFeedback.textContent = "That isn't quite right. Please try again! 💕";
+      nicknameFeedback.hidden = false;
+      nicknameAnswer.focus();
+      nicknameAnswer.select();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Birthday Trivia Quest 🎁</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="memory-wall.css" />
+  <link rel="stylesheet" href="music-player.css" />
+  <script src="music-config.js" defer></script>
+  <script src="music-player.js" defer></script>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 paper-texture">
+  <a href="memory-wall.html" class="fixed top-3 left-3 z-40 rounded-full bg-[#FFFDF7] px-4 py-2 text-sm font-bold text-[#3A2A29] sketch-border-sm transition hover:-translate-y-0.5">
+    ← Memory wall
+  </a>
+
+  <main class="relative w-full max-w-xl rounded-3xl bg-[#FFFDF7] p-6 text-center sketch-border shadow-2xl sm:p-10">
+    <div class="washi-tape -top-3 left-1/2 -translate-x-1/2 rotate-2"></div>
+    <div class="mb-3 text-5xl" aria-hidden="true">🧩</div>
+    <p class="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-[#9A7440]">Your next surprise</p>
+    <h1 class="mb-2 text-3xl font-bold text-[#3A2A29] sm:text-4xl">Birthday Trivia Quest</h1>
+    <p class="mb-6 text-sm font-semibold text-[#3A2A29]/80">Answer all five questions to unlock the digital vault! 💌</p>
+
+    <section id="trivia-question-view" aria-live="polite">
+      <div class="mb-4 flex items-center justify-between">
+        <span id="trivia-step-badge" class="rounded-full border-2 border-[#3A2A29] bg-[#DFD3E8] px-3 py-1 text-xs font-bold uppercase tracking-wider">Question 1 of 5</span>
+        <div id="trivia-progress-dots" class="flex gap-1.5" aria-label="Question progress"></div>
+      </div>
+      <h2 id="trivia-question" class="mb-5 text-left text-xl font-bold leading-snug text-[#3A2A29]"></h2>
+      <div id="trivia-options" class="space-y-2.5"></div>
+      <p id="trivia-feedback" class="mt-4 rounded-xl border-2 border-[#3A2A29] bg-[#FDE8B2] p-3 text-left text-sm font-bold text-[#3A2A29]" role="status" aria-live="polite" hidden></p>
+    </section>
+
+    <section id="trivia-complete-view" class="py-4" hidden>
+      <div class="mb-3 text-5xl" aria-hidden="true">🎉</div>
+      <h2 class="mb-2 text-2xl font-bold text-[#3A2A29]">You did it!</h2>
+      <p class="mb-6 text-sm font-semibold text-[#3A2A29]/80">All five answers are right. Your digital vault is ready to open. 💖</p>
+      <a href="digital-vault.html" class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#DFB45A] px-7 py-3 font-bold text-white sketch-border-sm transition hover:-translate-y-1 hover:bg-[#d3a445]">
+        Open the digital vault <span aria-hidden="true">💌</span>
+      </a>
+    </section>
+  </main>
+
+  <script src="trivia.js"></script>
+</body>
+</html>
